@@ -10,7 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class RecepieRequest {
+    private Integer userId;
     private RecepieType type;
     private Double price;
-    private RecepiePricePreferences pricePreferences;
+    private RecipePricePreferences pricePreferences;
 }

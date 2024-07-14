@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class RecepiePricePreferences {
+public class RecipePricePreferences {
     private Double top;
     private Double bottom;
     private Double shoes;

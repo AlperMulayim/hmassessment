@@ -3,8 +3,9 @@ package com.hm.alpermulayim.dressrecommenderapi.recommendations.services;
 import com.hm.alpermulayim.dressrecommenderapi.products.entities.Product;
 import com.hm.alpermulayim.dressrecommenderapi.products.repositories.ProductAttributesRepository;
 import com.hm.alpermulayim.dressrecommenderapi.products.services.HmProductService;
+import com.hm.alpermulayim.dressrecommenderapi.recommendations.dtos.RecepieRequest;
 import com.hm.alpermulayim.dressrecommenderapi.recommendations.dtos.RecommendedProduct;
-import com.hm.alpermulayim.dressrecommenderapi.recommendations.dtos.RecommendedRecepie;
+import com.hm.alpermulayim.dressrecommenderapi.recommendations.dtos.RecommendedRecipe;
 import com.hm.alpermulayim.dressrecommenderapi.recommendations.entities.ClothingRecepie;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class RecommendationService {
         this.attributesRepository = attributesRepository;
     }
 
-    public RecommendedRecepie getRecepies(){
+    public RecommendedRecipe getRecipes(){
 
         List<Product> products = productService.getProducts().subList(37,44);
 
@@ -45,7 +46,7 @@ public class RecommendationService {
                 .mapToDouble(product -> product.getPrice().doubleValue())
                 .sum());
 
-        return RecommendedRecepie.builder()
+        return RecommendedRecipe.builder()
                 .price(totalPrice)
                 .code("RCP-123")
                 .name("wedding")
@@ -53,5 +54,27 @@ public class RecommendationService {
                 .build();
     }
 
+
+    public RecommendedRecipe getRecipesForPreferences(RecepieRequest recepieRequest){
+        //TODO: Get products  < price
+        //TODO: filter top clothes with user history preferences < % price clothes preference
+        //TODO: filter bottom clothes with user history preferences < % price clothes preference
+        //TODO: filter shoes with user history preferences < % price shoes preference
+        //TODO: filter accessories with user history preferences < % price accessories preference
+
+        //TODO: selection algorithm , Knapsack.
+
+        //TODO: create recommended recipe
+
+        //TODO: save recommended recepie
+
+        //TODO: recepie will commented and scored create scoring table with userid and recepie id.
+
+
+
+
+        return RecommendedRecipe.builder()
+                .build();
+    }
 
 }

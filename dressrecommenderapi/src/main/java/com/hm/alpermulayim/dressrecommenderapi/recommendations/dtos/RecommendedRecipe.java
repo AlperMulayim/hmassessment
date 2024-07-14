@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class RecommendedRecepie {
+public class RecommendedRecipe {
     private String name;
     private BigDecimal price;
     private String code;
