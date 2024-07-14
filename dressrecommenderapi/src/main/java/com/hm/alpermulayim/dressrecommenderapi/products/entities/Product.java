@@ -29,4 +29,5 @@ public abstract class Product {
 
     @Column(name = "stock")
     private Integer stock;
+
 }

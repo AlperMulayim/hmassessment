@@ -1,4 +1,4 @@
-package com.hm.alpermulayim.dressrecommenderapi.products.shoes;
+package com.hm.alpermulayim.dressrecommenderapi.products.entities;
 
 import com.hm.alpermulayim.dressrecommenderapi.products.entities.Product;
 import jakarta.persistence.Column;
