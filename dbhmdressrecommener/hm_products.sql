@@ -8,7 +8,8 @@ create table hm_products (
 	price DECIMAL(5,2),
 	product_code VARCHAR(50),
 	season VARCHAR(50),
-	name VARCHAR(150)
+	name VARCHAR(150),
+    CONSTRAINT PRIMARY KEY(product_id)
 );
 
 

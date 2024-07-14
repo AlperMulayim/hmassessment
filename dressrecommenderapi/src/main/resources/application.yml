@@ -4,7 +4,8 @@ spring:
     url: jdbc:mysql://localhost/db_hm_dress_recommender
     username: root
     password: rootpass
-    jpa:
-      hibernate.ddl-auto: validate
-      generate-ddl: true
-      show-sql: true
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    generate-ddl: true
+    show-sql: true

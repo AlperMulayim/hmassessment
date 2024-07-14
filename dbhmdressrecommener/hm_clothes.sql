@@ -1,62 +1,62 @@
 create table hm_clothes (
 	product_id INT,
+	name VARCHAR(100),
 	stock INT,
-	product_type VARCHAR(50),
-	color VARCHAR(10),
-	size VARCHAR(10),
-	material VARCHAR(50),
+	size VARCHAR(3),
 	price DECIMAL(5,2),
 	product_code VARCHAR(50),
-	season VARCHAR(50),
-	name VARCHAR(150)
+	clothe_type VARCHAR(10)
 );
-insert into hm_clothes (product_id, stock, product_type, color, size, material, price, product_code, season, name) values (1, 49, 'Raincoat', 'Green', 'XL', 'Cotton', 243.76, '59088-838', 'summer', ' Green Cotton Raincoat  XL summer');
-insert into hm_clothes (product_id, stock, product_type, color, size, material, price, product_code, season, name) values (2, 155, 'Jeans', 'Pink', 'M', 'Silk', 83.65, '60905-0023', 'spring', ' Pink Silk Jeans  M spring');
-insert into hm_clothes (product_id, stock, product_type, color, size, material, price, product_code, season, name) values (3, 69, 'Jacket', 'Black', 'XXL', 'Denim', 21.32, '36987-1027', 'spring', ' Black Denim Jacket  XXL spring');
-insert into hm_clothes (product_id, stock, product_type, color, size, material, price, product_code, season, name) values (4, 74, 'Sweatpants', 'White', 'XS', 'Cotton', 37.97, '65663-019', 'winter', ' White Cotton Sweatpants  XS winter');
-insert into hm_clothes (product_id, stock, product_type, color, size, material, price, product_code, season, name) values (5, 18, 'Crop Top', 'White', 'M', 'Silk', 87.13, '62584-265', 'winter', ' White Silk Crop Top  M winter');
-insert into hm_clothes (product_id, stock, product_type, color, size, material, price, product_code, season, name) values (6, 55, 'Sweater', 'Pink', 'L', 'Denim', 283.99, '51393-6446', 'winter', ' Pink Denim Sweater  L winter');
-insert into hm_clothes (product_id, stock, product_type, color, size, material, price, product_code, season, name) values (7, 122, 'Blouse', 'White', 'M', 'Wool', 476.5, '55111-619', 'winter', ' White Wool Blouse  M winter');
-insert into hm_clothes (product_id, stock, product_type, color, size, material, price, product_code, season, name) values (8, 104, 'Leggings', 'Blue', 'XS', 'Linen', 226.75, '43742-0307', 'summer', ' Blue Linen Leggings  XS summer');
-insert into hm_clothes (product_id, stock, product_type, color, size, material, price, product_code, season, name) values (9, 189, 'Polo Shirt', 'Black', 'XS', 'Polyester', 431.41, '43063-182', 'spring', ' Black Polyester Polo Shirt  XS spring');
-insert into hm_clothes (product_id, stock, product_type, color, size, material, price, product_code, season, name) values (10, 99, 'Raincoat', 'Red', 'L', 'Polyester', 427.87, '65044-3717', 'spring', ' Red Polyester Raincoat  L spring');
-insert into hm_clothes (product_id, stock, product_type, color, size, material, price, product_code, season, name) values (11, 199, 'Trousers', 'White', 'XS', 'Cotton', 219.61, '0268-6778', 'spring', ' White Cotton Trousers  XS spring');
-insert into hm_clothes (product_id, stock, product_type, color, size, material, price, product_code, season, name) values (12, 60, 'Puffer Jacket', 'Red', 'L', 'Wool', 25.37, '60505-2544', 'summer', ' Red Wool Puffer Jacket  L summer');
-insert into hm_clothes (product_id, stock, product_type, color, size, material, price, product_code, season, name) values (13, 60, 'Jeans', 'Pink', 'M', 'Linen', 441.19, '49643-340', 'spring', ' Pink Linen Jeans  M spring');
-insert into hm_clothes (product_id, stock, product_type, color, size, material, price, product_code, season, name) values (14, 48, 'Capri Pants', 'Black', 'XXL', 'Cotton', 287.25, '62175-380', 'summer', ' Black Cotton Capri Pants  XXL summer');
-insert into hm_clothes (product_id, stock, product_type, color, size, material, price, product_code, season, name) values (15, 103, 'Cargo Pants', 'White', 'L', 'Silk', 348.93, '52125-099', 'summer', ' White Silk Cargo Pants  L summer');
-insert into hm_clothes (product_id, stock, product_type, color, size, material, price, product_code, season, name) values (16, 175, 'Blazer', 'Blue', 'S', 'Silk', 123.76, '64990-609', 'spring', ' Blue Silk Blazer  S spring');
-insert into hm_clothes (product_id, stock, product_type, color, size, material, price, product_code, season, name) values (17, 105, 'Cargo Pants', 'White', 'M', 'Silk', 346.9, '30142-890', 'winter', ' White Silk Cargo Pants  M winter');
-insert into hm_clothes (product_id, stock, product_type, color, size, material, price, product_code, season, name) values (18, 182, 'Leggings', 'Blue', 'S', 'Cotton', 52.81, '54868-4729', 'winter', ' Blue Cotton Leggings  S winter');
-insert into hm_clothes (product_id, stock, product_type, color, size, material, price, product_code, season, name) values (19, 194, 'Coat', 'Green', 'XL', 'Polyester', 55.89, '42961-092', 'winter', ' Green Polyester Coat  XL winter');
-insert into hm_clothes (product_id, stock, product_type, color, size, material, price, product_code, season, name) values (20, 120, 'Blouse', 'Brown', 'XS', 'Polyester', 209.34, '55312-379', 'spring', ' Brown Polyester Blouse  XS spring');
-insert into hm_clothes (product_id, stock, product_type, color, size, material, price, product_code, season, name) values (21, 149, 'Raincoat', 'Pink', 'XS', 'Polyester', 185.05, '0955-1025', 'spring', ' Pink Polyester Raincoat  XS spring');
-insert into hm_clothes (product_id, stock, product_type, color, size, material, price, product_code, season, name) values (22, 16, 'Vest', 'Green', 'XS', 'Denim', 31.52, '41520-352', 'summer', ' Green Denim Vest  XS summer');
-insert into hm_clothes (product_id, stock, product_type, color, size, material, price, product_code, season, name) values (23, 32, 'T-Shirt', 'Blue', 'L', 'Denim', 16.96, '55319-133', 'spring', ' Blue Denim T-Shirt  L spring');
-insert into hm_clothes (product_id, stock, product_type, color, size, material, price, product_code, season, name) values (24, 159, 'Crop Top', 'Black', 'L', 'Polyester', 186.59, '0074-3641', 'winter', ' Black Polyester Crop Top  L winter');
-insert into hm_clothes (product_id, stock, product_type, color, size, material, price, product_code, season, name) values (25, 30, 'Trench Coat', 'Blue', 'XS', 'Wool', 317.11, '53425-002', 'spring', ' Blue Wool Trench Coat  XS spring');
-insert into hm_clothes (product_id, stock, product_type, color, size, material, price, product_code, season, name) values (26, 142, 'Sweatpants', 'Black', 'XL', 'Linen', 145.67, '48951-9122', 'summer', ' Black Linen Sweatpants  XL summer');
-insert into hm_clothes (product_id, stock, product_type, color, size, material, price, product_code, season, name) values (27, 190, 'Blouse', 'Green', 'XL', 'Denim', 86.81, '0591-2784', 'spring', ' Green Denim Blouse  XL spring');
-insert into hm_clothes (product_id, stock, product_type, color, size, material, price, product_code, season, name) values (28, 95, 'Hoodie', 'Green', 'XL', 'Silk', 420.55, '55111-255', 'spring', ' Green Silk Hoodie  XL spring');
-insert into hm_clothes (product_id, stock, product_type, color, size, material, price, product_code, season, name) values (29, 133, 'Blazer', 'Blue', 'XXL', 'Polyester', 454.11, '69085-466', 'spring', ' Blue Polyester Blazer  XXL spring');
-insert into hm_clothes (product_id, stock, product_type, color, size, material, price, product_code, season, name) values (30, 63, 'Shirt', 'Green', 'XXL', 'Linen', 429.34, '59088-112', 'summer', ' Green Linen Shirt  XXL summer');
-insert into hm_clothes (product_id, stock, product_type, color, size, material, price, product_code, season, name) values (31, 30, 'Blazer', 'Pink', 'S', 'Cotton', 335.45, '0603-7805', 'spring', ' Pink Cotton Blazer  S spring');
-insert into hm_clothes (product_id, stock, product_type, color, size, material, price, product_code, season, name) values (32, 186, 'Jeans', 'Blue', 'XS', 'Linen', 120.24, '14783-606', 'winter', ' Blue Linen Jeans  XS winter');
-insert into hm_clothes (product_id, stock, product_type, color, size, material, price, product_code, season, name) values (33, 86, 'Jeans', 'Black', 'XXL', 'Cotton', 486.13, '64616-079', 'winter', ' Black Cotton Jeans  XXL winter');
-insert into hm_clothes (product_id, stock, product_type, color, size, material, price, product_code, season, name) values (34, 34, 'Trench Coat', 'Brown', 'XL', 'Denim', 281.0, '67544-879', 'spring', ' Brown Denim Trench Coat  XL spring');
-insert into hm_clothes (product_id, stock, product_type, color, size, material, price, product_code, season, name) values (35, 187, 'Tank Top', 'Red', 'XS', 'Linen', 126.5, '76485-1042', 'spring', ' Red Linen Tank Top  XS spring');
-insert into hm_clothes (product_id, stock, product_type, color, size, material, price, product_code, season, name) values (36, 64, 'Shirt', 'Blue', 'L', 'Silk', 327.93, '10812-950', 'spring', ' Blue Silk Shirt  L spring');
-insert into hm_clothes (product_id, stock, product_type, color, size, material, price, product_code, season, name) values (37, 114, 'Raincoat', 'Pink', 'XS', 'Polyester', 258.19, '0264-7614', 'winter', ' Pink Polyester Raincoat  XS winter');
-insert into hm_clothes (product_id, stock, product_type, color, size, material, price, product_code, season, name) values (38, 114, 'Cargo Pants', 'Green', 'M', 'Linen', 20.45, '52125-155', 'summer', ' Green Linen Cargo Pants  M summer');
-insert into hm_clothes (product_id, stock, product_type, color, size, material, price, product_code, season, name) values (39, 98, 'Blouse', 'Pink', 'M', 'Silk', 226.87, '54868-4799', 'spring', ' Pink Silk Blouse  M spring');
-insert into hm_clothes (product_id, stock, product_type, color, size, material, price, product_code, season, name) values (40, 132, 'Cardigan', 'Brown', 'L', 'Cotton', 282.44, '0615-1324', 'winter', ' Brown Cotton Cardigan  L winter');
-insert into hm_clothes (product_id, stock, product_type, color, size, material, price, product_code, season, name) values (41, 51, 'Puffer Jacket', 'Blue', 'S', 'Linen', 87.74, '60429-305', 'winter', ' Blue Linen Puffer Jacket  S winter');
-insert into hm_clothes (product_id, stock, product_type, color, size, material, price, product_code, season, name) values (42, 72, 'Capri Pants', 'Green', 'XL', 'Wool', 263.59, '52685-300', 'winter', ' Green Wool Capri Pants  XL winter');
-insert into hm_clothes (product_id, stock, product_type, color, size, material, price, product_code, season, name) values (43, 116, 'Sweater', 'Red', 'XS', 'Wool', 154.23, '41163-980', 'winter', ' Red Wool Sweater  XS winter');
-insert into hm_clothes (product_id, stock, product_type, color, size, material, price, product_code, season, name) values (44, 3, 'Jacket', 'Pink', 'XS', 'Silk', 194.53, '48951-2045', 'winter', ' Pink Silk Jacket  XS winter');
-insert into hm_clothes (product_id, stock, product_type, color, size, material, price, product_code, season, name) values (45, 141, 'Leggings', 'Green', 'XXL', 'Wool', 463.53, '54868-5381', 'winter', ' Green Wool Leggings  XXL winter');
-insert into hm_clothes (product_id, stock, product_type, color, size, material, price, product_code, season, name) values (46, 50, 'Puffer Jacket', 'Brown', 'XS', 'Cotton', 212.67, '0904-2614', 'summer', ' Brown Cotton Puffer Jacket  XS summer');
-insert into hm_clothes (product_id, stock, product_type, color, size, material, price, product_code, season, name) values (47, 60, 'Trench Coat', 'Brown', 'XL', 'Cotton', 157.27, '67510-0085', 'summer', ' Brown Cotton Trench Coat  XL summer');
-insert into hm_clothes (product_id, stock, product_type, color, size, material, price, product_code, season, name) values (48, 113, 'T-Shirt', 'Blue', 'XL', 'Polyester', 407.07, '59746-329', 'summer', ' Blue Polyester T-Shirt  XL summer');
-insert into hm_clothes (product_id, stock, product_type, color, size, material, price, product_code, season, name) values (49, 51, 'T-Shirt', 'Green', 'M', 'Polyester', 84.73, '54868-6099', 'spring', ' Green Polyester T-Shirt  M spring');
-insert into hm_clothes (product_id, stock, product_type, color, size, material, price, product_code, season, name) values (50, 117, 'T-Shirt', 'Pink', 'XS', 'Denim', 51.61, '55319-311', 'summer', ' Pink Denim T-Shirt  XS summer');
+
+-- Sample data for hm_clothes table
+INSERT INTO hm_clothes (product_id, name, stock, size, price, product_code, clothe_type) VALUES
+(1, 'Jeans', 50, 'M', 39.99, 'HM001', 'bottom'),
+(2, 'Chinos', 30, 'L', 49.99, 'HM002', 'bottom'),
+(3, 'Shorts', 40, 'S', 29.99, 'HM003', 'bottom'),
+(4, 'Skirt', 35, 'M', 34.99, 'HM004', 'bottom'),
+(5, 'Leggings', 60, 'S', 24.99, 'HM005', 'bottom'),
+(6, 'Trousers', 45, 'L', 54.99, 'HM006', 'bottom'),
+(7, 'Joggers', 55, 'M', 44.99, 'HM007', 'bottom'),
+(8, 'Capri Pants', 25, 'S', 29.99, 'HM008', 'bottom'),
+(9, 'Pants', 70, 'L', 59.99, 'HM009', 'bottom'),
+(10, 'Denim Shorts', 40, 'M', 34.99, 'HM010', 'bottom'),
+(11, 'T-Shirt', 80, 'M', 19.99, 'HM011', 'top'),
+(12, 'Blouse', 50, 'S', 29.99, 'HM012', 'top'),
+(13, 'Shirt', 60, 'L', 24.99, 'HM013', 'top'),
+(14, 'Tank Top', 65, 'S', 14.99, 'HM014', 'top'),
+(15, 'Sweater', 55, 'M', 39.99, 'HM015', 'top'),
+(16, 'Hoodie', 45, 'L', 49.99, 'HM016', 'top'),
+(17, 'Polo Shirt', 70, 'M', 29.99, 'HM017', 'top'),
+(18, 'Crop Top', 30, 'S', 19.99, 'HM018', 'top'),
+(19, 'Cardigan', 40, 'L', 34.99, 'HM019', 'top'),
+(20, 'Vest', 50, 'M', 24.99, 'HM020', 'top'),
+(21, 'Raincoat', 25, 'L', 59.99, 'HM021', 'top'),
+(22, 'Puffer Jacket', 35, 'M', 54.99, 'HM022', 'top'),
+(23, 'Trench Coat', 20, 'S', 74.99, 'HM023', 'top'),
+(24, 'Blazer', 30, 'L', 69.99, 'HM024', 'top'),
+(25, 'Dress Shirt', 40, 'M', 44.99, 'HM025', 'top'),
+(26, 'Denim Jacket', 45, 'L', 64.99, 'HM026', 'top'),
+(27, 'Bomber Jacket', 50, 'S', 49.99, 'HM027', 'top'),
+(28, 'Parka', 55, 'M', 79.99, 'HM028', 'top'),
+(29, 'Windbreaker', 60, 'L', 39.99, 'HM029', 'top'),
+(30, 'Peacoat', 35, 'S', 89.99, 'HM030', 'top'),
+(31, 'Cargo Pants', 40, 'M', 54.99, 'HM031', 'bottom'),
+(32, 'Cargo Shorts', 45, 'L', 34.99, 'HM032', 'bottom'),
+(33, 'Cargo Jacket', 25, 'S', 69.99, 'HM033', 'top'),
+(34, 'Cargo Vest', 30, 'M', 49.99, 'HM034', 'top'),
+(35, 'Cargo Skirt', 35, 'L', 29.99, 'HM035', 'bottom'),
+(36, 'Chino Shorts', 40, 'S', 19.99, 'HM036', 'bottom'),
+(37, 'Chino Pants', 45, 'M', 39.99, 'HM037', 'bottom'),
+(38, 'Chino Jacket', 50, 'L', 59.99, 'HM038', 'top'),
+(39, 'Chino Vest', 55, 'S', 49.99, 'HM039', 'top'),
+(40, 'Chino Skirt', 60, 'M', 24.99, 'HM040', 'bottom'),
+(41, 'Sweatpants', 65, 'L', 34.99, 'HM041', 'bottom'),
+(42, 'Sweat Shorts', 70, 'S', 29.99, 'HM042', 'bottom'),
+(43, 'Sweatshirt', 40, 'M', 44.99, 'HM043', 'top'),
+(44, 'Sweat Hoodie', 45, 'L', 54.99, 'HM044', 'top'),
+(45, 'Sweat Vest', 50, 'S', 24.99, 'HM045', 'top'),
+(46, 'Sweat Jacket', 55, 'M', 39.99, 'HM046', 'top'),
+(47, 'Sweat Cardigan', 60, 'L', 49.99, 'HM047', 'top'),
+(48, 'Denim Skirt', 25, 'S', 19.99, 'HM048', 'bottom'),
+(49, 'Denim Pants', 30, 'M', 29.99, 'HM049', 'bottom'),
+(50, 'Denim Shorts', 35, 'L', 39.99, 'HM050', 'bottom');

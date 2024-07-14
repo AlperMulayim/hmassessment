@@ -2,10 +2,11 @@
 USE db_hm_dress_recommender;
 
 create table hm_customers (
-	id INT,
+	id INT AUTO_INCREMENT,
 	first_name VARCHAR(50),
 	last_name VARCHAR(50),
-	code VARCHAR(50)
+	code VARCHAR(50),
+	CONSTRAINT PRIMARY KEY(id)
 );
 insert into hm_customers (id, first_name, last_name, code) values (1, 'Shamus', 'Batecok', '13733-030');
 insert into hm_customers (id, first_name, last_name, code) values (2, 'Patricia', 'Thorington', '47202-1143');

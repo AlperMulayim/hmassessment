@@ -1,41 +1,38 @@
 create table hm_shoes (
-	id INT,
-	code VARCHAR(50),
-	size VARCHAR(5),
-	type VARCHAR(50),
-	material VARCHAR(50),
-	color VARCHAR(10),
-	name VARCHAR(150),
+	product_id INT,
+	stock INT,
+	name VARCHAR(12),
+	size INT,
 	price DECIMAL(5,2),
-	stock INT
+	product_code VARCHAR(50)
 );
-insert into hm_shoes (id, code, size, type, material, color, name, price, stock) values (1, '69097-155', 44, 'Boots', 'Leather', 'Navy Blue', 'Leather Boots Navy Blue 44', 97.9, 43);
-insert into hm_shoes (id, code, size, type, material, color, name, price, stock) values (2, '13537-034', 44, 'Sport Shoes', 'Synthetic Leather', 'Pink', 'Synthetic Leather Sport Shoes Pink 44', 96.49, 22);
-insert into hm_shoes (id, code, size, type, material, color, name, price, stock) values (3, '54868-5183', 37, 'Sandals', 'Suede', 'Brown', 'Suede Sandals Brown 37', 28.28, 24);
-insert into hm_shoes (id, code, size, type, material, color, name, price, stock) values (4, '62362-179', 37, 'Casual Shoes', 'Mesh', 'Yellow', 'Mesh Casual Shoes Yellow 37', 22.7, 48);
-insert into hm_shoes (id, code, size, type, material, color, name, price, stock) values (5, '49483-387', 44, 'Sport Shoes', 'Suede', 'Purple', 'Suede Sport Shoes Purple 44', 57.23, 49);
-insert into hm_shoes (id, code, size, type, material, color, name, price, stock) values (6, '42669-001', 38, 'Boots', 'Canvas', 'Yellow', 'Canvas Boots Yellow 38', 58.16, 60);
-insert into hm_shoes (id, code, size, type, material, color, name, price, stock) values (7, '57955-1541', 44, 'Sport Shoes', 'Synthetic Leather', 'Pink', 'Synthetic Leather Sport Shoes Pink 44', 88.41, 40);
-insert into hm_shoes (id, code, size, type, material, color, name, price, stock) values (8, '59294-001', 37, 'Sport Shoes', 'Suede', 'Black', 'Suede Sport Shoes Black 37', 41.47, 6);
-insert into hm_shoes (id, code, size, type, material, color, name, price, stock) values (9, '57337-054', 43, 'Sandals', 'Synthetic Leather', 'Black', 'Synthetic Leather Sandals Black 43', 15.84, 1);
-insert into hm_shoes (id, code, size, type, material, color, name, price, stock) values (10, '0143-9680', 41, 'Sneakers', 'Synthetic Leather', 'Purple', 'Synthetic Leather Sneakers Purple 41', 81.66, 6);
-insert into hm_shoes (id, code, size, type, material, color, name, price, stock) values (11, '35356-851', 39, 'Flip Flops', 'Synthetic Leather', 'Pink', 'Synthetic Leather Flip Flops Pink 39', 28.09, 12);
-insert into hm_shoes (id, code, size, type, material, color, name, price, stock) values (12, '24385-390', 36, 'Loafers', 'Canvas', 'Red', 'Canvas Loafers Red 36', 59.81, 44);
-insert into hm_shoes (id, code, size, type, material, color, name, price, stock) values (13, '52686-262', 39, 'Loafers', 'Canvas', 'Silver', 'Canvas Loafers Silver 39', 28.09, 1);
-insert into hm_shoes (id, code, size, type, material, color, name, price, stock) values (14, '48951-9167', 37, 'Loafers', 'Synthetic Leather', 'Pink', 'Synthetic Leather Loafers Pink 37', 65.91, 38);
-insert into hm_shoes (id, code, size, type, material, color, name, price, stock) values (15, '21695-017', 38, 'Sandals', 'Leather', 'Pink', 'Leather Sandals Pink 38', 77.18, 87);
-insert into hm_shoes (id, code, size, type, material, color, name, price, stock) values (16, '0024-5521', 43, 'Boots', 'Mesh', 'Pink', 'Mesh Boots Pink 43', 81.57, 100);
-insert into hm_shoes (id, code, size, type, material, color, name, price, stock) values (17, '59535-0301', 43, 'Sneakers', 'Leather', 'Gold', 'Leather Sneakers Gold 43', 10.98, 22);
-insert into hm_shoes (id, code, size, type, material, color, name, price, stock) values (18, '0268-0710', 38, 'Sport Shoes', 'Suede', 'Brown', 'Suede Sport Shoes Brown 38', 79.55, 7);
-insert into hm_shoes (id, code, size, type, material, color, name, price, stock) values (19, '37000-762', 44, 'Sport Shoes', 'Canvas', 'Gold', 'Canvas Sport Shoes Gold 44', 71.27, 47);
-insert into hm_shoes (id, code, size, type, material, color, name, price, stock) values (20, '47682-101', 39, 'Casual Shoes', 'Mesh', 'Purple', 'Mesh Casual Shoes Purple 39', 10.64, 48);
-insert into hm_shoes (id, code, size, type, material, color, name, price, stock) values (21, '37012-099', 40, 'Loafers', 'Leather', 'Blue', 'Leather Loafers Blue 40', 32.46, 22);
-insert into hm_shoes (id, code, size, type, material, color, name, price, stock) values (22, '35000-716', 36, 'Casual Shoes', 'Suede', 'Black', 'Suede Casual Shoes Black 36', 74.22, 86);
-insert into hm_shoes (id, code, size, type, material, color, name, price, stock) values (23, '49035-187', 42, 'Sneakers', 'Suede', 'Silver', 'Suede Sneakers Silver 42', 81.74, 74);
-insert into hm_shoes (id, code, size, type, material, color, name, price, stock) values (24, '21695-300', 41, 'Heels', 'Canvas', 'Yellow', 'Canvas Heels Yellow 41', 80.73, 99);
-insert into hm_shoes (id, code, size, type, material, color, name, price, stock) values (25, '13734-111', 44, 'Sandals', 'Canvas', 'Pink', 'Canvas Sandals Pink 44', 87.3, 88);
-insert into hm_shoes (id, code, size, type, material, color, name, price, stock) values (26, '46122-179', 36, 'Boots', 'Synthetic Leather', 'Black', 'Synthetic Leather Boots Black 36', 19.72, 94);
-insert into hm_shoes (id, code, size, type, material, color, name, price, stock) values (27, '48878-3215', 39, 'Heels', 'Synthetic Leather', 'Blue', 'Synthetic Leather Heels Blue 39', 59.1, 27);
-insert into hm_shoes (id, code, size, type, material, color, name, price, stock) values (28, '43319-050', 36, 'Boots', 'Suede', 'Gold', 'Suede Boots Gold 36', 90.45, 58);
-insert into hm_shoes (id, code, size, type, material, color, name, price, stock) values (29, '36987-3445', 43, 'Heels', 'Canvas', 'Yellow', 'Canvas Heels Yellow 43', 95.87, 62);
-insert into hm_shoes (id, code, size, type, material, color, name, price, stock) values (30, '54868-5967', 42, 'Flip Flops', 'Canvas', 'Yellow', 'Canvas Flip Flops Yellow 42', 60.26, 13);
+insert into hm_shoes (product_id, stock, name, size, price, product_code) values (51, 89, 'Casual Shoes', 41, 72.93, '60505-3670');
+insert into hm_shoes (product_id, stock, name, size, price, product_code) values (52, 26, 'Sandals', 36, 54.74, '0245-0057');
+insert into hm_shoes (product_id, stock, name, size, price, product_code) values (53, 29, 'Heels', 36, 41.43, '49852-165');
+insert into hm_shoes (product_id, stock, name, size, price, product_code) values (54, 68, 'Sneakers', 38, 70.3, '41520-416');
+insert into hm_shoes (product_id, stock, name, size, price, product_code) values (55, 39, 'Flip Flops', 42, 13.41, '59538-001');
+insert into hm_shoes (product_id, stock, name, size, price, product_code) values (56, 72, 'Loafers', 40, 76.46, '66116-527');
+insert into hm_shoes (product_id, stock, name, size, price, product_code) values (57, 51, 'Heels', 36, 46.51, '0942-9202');
+insert into hm_shoes (product_id, stock, name, size, price, product_code) values (58, 98, 'Flip Flops', 40, 58.43, '55154-5767');
+insert into hm_shoes (product_id, stock, name, size, price, product_code) values (59, 29, 'Loafers', 37, 45.08, '52472-100');
+insert into hm_shoes (product_id, stock, name, size, price, product_code) values (60, 1, 'Sandals', 38, 37.24, '24338-851');
+insert into hm_shoes (product_id, stock, name, size, price, product_code) values (61, 67, 'Sneakers', 36, 43.93, '59572-102');
+insert into hm_shoes (product_id, stock, name, size, price, product_code) values (62, 75, 'Sandals', 37, 88.56, '0268-1117');
+insert into hm_shoes (product_id, stock, name, size, price, product_code) values (63, 64, 'Boots', 39, 57.31, '63148-240');
+insert into hm_shoes (product_id, stock, name, size, price, product_code) values (64, 24, 'Flip Flops', 38, 34.74, '0641-0928');
+insert into hm_shoes (product_id, stock, name, size, price, product_code) values (65, 88, 'Sneakers', 37, 97.61, '37205-377');
+insert into hm_shoes (product_id, stock, name, size, price, product_code) values (66, 94, 'Boots', 43, 13.93, '54458-908');
+insert into hm_shoes (product_id, stock, name, size, price, product_code) values (67, 46, 'Heels', 40, 67.76, '54416-002');
+insert into hm_shoes (product_id, stock, name, size, price, product_code) values (68, 76, 'Sandals', 37, 78.9, '59564-251');
+insert into hm_shoes (product_id, stock, name, size, price, product_code) values (69, 94, 'Loafers', 41, 67.35, '0268-0646');
+insert into hm_shoes (product_id, stock, name, size, price, product_code) values (70, 30, 'Sneakers', 40, 56.11, '41520-630');
+insert into hm_shoes (product_id, stock, name, size, price, product_code) values (71, 81, 'Casual Shoes', 36, 69.26, '51532-4616');
+insert into hm_shoes (product_id, stock, name, size, price, product_code) values (72, 48, 'Flip Flops', 41, 64.82, '51079-524');
+insert into hm_shoes (product_id, stock, name, size, price, product_code) values (73, 79, 'Casual Shoes', 43, 94.25, '61786-021');
+insert into hm_shoes (product_id, stock, name, size, price, product_code) values (74, 85, 'Loafers', 39, 20.35, '0310-0281');
+insert into hm_shoes (product_id, stock, name, size, price, product_code) values (75, 37, 'Sport Shoes', 43, 69.12, '49884-666');
+insert into hm_shoes (product_id, stock, name, size, price, product_code) values (76, 78, 'Boots', 42, 97.84, '52533-002');
+insert into hm_shoes (product_id, stock, name, size, price, product_code) values (77, 93, 'Sneakers', 37, 82.24, '55154-5837');
+insert into hm_shoes (product_id, stock, name, size, price, product_code) values (78, 50, 'Sport Shoes', 41, 59.74, '76357-200');
+insert into hm_shoes (product_id, stock, name, size, price, product_code) values (79, 57, 'Sandals', 37, 49.71, '49781-044');
+insert into hm_shoes (product_id, stock, name, size, price, product_code) values (80, 80, 'Sandals', 40, 37.01, '62175-204');
