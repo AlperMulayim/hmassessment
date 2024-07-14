@@ -1,4 +1,4 @@
-package com.hm.alpermulayim.dressrecommenderapi.products.clothes;
+package com.hm.alpermulayim.dressrecommenderapi.products.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

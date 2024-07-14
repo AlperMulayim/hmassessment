@@ -1,6 +1,6 @@
 package com.hm.alpermulayim.dressrecommenderapi.products.controllers;
 
-import com.hm.alpermulayim.dressrecommenderapi.products.clothes.Product;
+import com.hm.alpermulayim.dressrecommenderapi.products.entities.Product;
 import com.hm.alpermulayim.dressrecommenderapi.products.services.HmProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,0 +1,17 @@
+accessories materials
+Leather, Fabric, Cotton, Wool, Gold
+
+clothe colors
+Black, White, Blue, Red, Green, Pink, Brown
+
+clothe matarials
+Cotton, Polyester, Wool, Silk, Linen, Denim
+
+clothe season
+winter,spring,summer
+
+shoe colors
+Black, White, Brown, Navy Blue, Gray, Pink, Red, Blue, Pink
+
+shoe matarials
+Leather, Suede, Canvas, Mesh, Synthetic Leather

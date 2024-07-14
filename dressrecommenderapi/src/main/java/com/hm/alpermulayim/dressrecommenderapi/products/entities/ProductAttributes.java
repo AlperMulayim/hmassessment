@@ -1,4 +1,4 @@
-package com.hm.alpermulayim.dressrecommenderapi.products.attributes;
+package com.hm.alpermulayim.dressrecommenderapi.products.entities;
 import jakarta.persistence.*;
 
 @Entity

@@ -1,6 +1,6 @@
 package com.hm.alpermulayim.dressrecommenderapi.products.services;
 
-import com.hm.alpermulayim.dressrecommenderapi.products.clothes.Product;
+import com.hm.alpermulayim.dressrecommenderapi.products.entities.Product;
 import com.hm.alpermulayim.dressrecommenderapi.products.repositories.HmProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
