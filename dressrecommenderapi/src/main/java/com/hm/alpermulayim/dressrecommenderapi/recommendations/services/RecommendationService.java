@@ -2,8 +2,7 @@ package com.hm.alpermulayim.dressrecommenderapi.recommendations.services;
 
 import com.hm.alpermulayim.dressrecommenderapi.historymanager.entites.CustomerHistoryAnalysis;
 import com.hm.alpermulayim.dressrecommenderapi.historymanager.entites.PurchaseHistory;
-import com.hm.alpermulayim.dressrecommenderapi.historymanager.repositories.PurchaseHistoryRepository;
-import com.hm.alpermulayim.dressrecommenderapi.historymanager.services.CustomerPurchaseHistoryAnalysis;
+import com.hm.alpermulayim.dressrecommenderapi.historymanager.services.CustomerPurchaseHistoryAnalyseManager;
 import com.hm.alpermulayim.dressrecommenderapi.historymanager.services.PurchaseHistoryService;
 import com.hm.alpermulayim.dressrecommenderapi.products.entities.HmAccessory;
 import com.hm.alpermulayim.dressrecommenderapi.products.entities.HmClothes;
@@ -41,19 +40,23 @@ public class RecommendationService {
 
     private PurchaseHistoryService historyService;
 
+    private CustomerPurchaseHistoryAnalyseManager historyAnalyseManager;
+
     @Autowired
     public RecommendationService(HmProductService productService,
                                  ProductAttributesRepository attributesRepository,
                                  HmClothesRepository clothesRepository,
                                  HmShoesRepository shoesRepository,
                                  HmAccessoriesRepository accessoriesRepository,
-                                 PurchaseHistoryService historyService) {
+                                 PurchaseHistoryService historyService,
+                                 CustomerPurchaseHistoryAnalyseManager analyseManager) {
         this.productService = productService;
         this.attributesRepository = attributesRepository;
         this.clothesRepository = clothesRepository;
         this.shoesRepository = shoesRepository;
         this.accessoriesRepository = accessoriesRepository;
         this.historyService = historyService;
+        this.historyAnalyseManager = analyseManager;
     }
 
     public RecommendedRecipe getRecipes(){
@@ -118,12 +121,11 @@ public class RecommendationService {
         //SELECT shoe
         List< PurchaseHistory> history  = historyService.getPurchaseHistoryForCustomer(1);
 
-        CustomerPurchaseHistoryAnalysis historyAnalysis = new CustomerPurchaseHistoryAnalysis();
-        CustomerHistoryAnalysis customerAnalysis = historyAnalysis.analyze(history);
+        CustomerHistoryAnalysis customerAnalysis = historyAnalyseManager.analyze(history);
 
         //SELECT accesory
 
-
+        System.out.println(customerAnalysis);
 
         List<RecommendedProduct> recommendedProducts = accessories.stream()
                 .map(product -> RecommendedProduct.builder()

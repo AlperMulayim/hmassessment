@@ -5,14 +5,11 @@ import com.hm.alpermulayim.dressrecommenderapi.historymanager.entites.PurchaseHi
 import com.hm.alpermulayim.dressrecommenderapi.historymanager.entites.PurchasedProductDetails;
 import org.springframework.stereotype.Component;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
-public class CustomerPurchaseHistoryAnalysis {
+public class CustomerPurchaseHistoryAnalyseManager {
 
     public CustomerHistoryAnalysis analyze(List<PurchaseHistory> history){
         List<PurchasedProductDetails> productDetails = history.stream()
@@ -31,11 +28,24 @@ public class CustomerPurchaseHistoryAnalysis {
         Map<String,Long> seasonFrequency = productDetails.stream()
                 .collect(Collectors.groupingBy(PurchasedProductDetails::getSeason, Collectors.counting()));
 
-        System.out.println("  >  "+ colorFrequency);
-        System.out.println("  >  "+ styleFrequency);
-        System.out.println("  >  "+ seasonFrequency);
-        System.out.println("  >  "+ materialFrequency);
-            return null;
+            return CustomerHistoryAnalysis.builder()
+                    .styleMap(styleFrequency)
+                    .materialMap(materialFrequency)
+                    .colorMap(colorFrequency)
+                    .seasonMap(seasonFrequency)
+                    .favMaterial(findMaxFrequentInMap(materialFrequency))
+                    .favStyle(findMaxFrequentInMap(styleFrequency))
+                    .favColor(findMaxFrequentInMap(colorFrequency))
+                    .favSeason(findMaxFrequentInMap(seasonFrequency))
+                    .build();
+    }
+
+    private Optional<String> findMaxFrequentInMap(Map<String,Long> map){
+        Optional<Map.Entry<String,Long>> maxEntry =  map.entrySet().stream().max(Comparator.comparing(Map.Entry::getValue));
+        if(maxEntry.isPresent()){
+            return Optional.of(maxEntry.get().getKey());
+        }
+        return Optional.empty();
     }
 
 }
