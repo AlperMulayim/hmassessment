@@ -1,4 +1,4 @@
-CREATE IF NOT EXISTS hm_product_attributes (
+CREATE TABLE IF NOT EXISTS hm_product_attributes (
 	id INTEGER NOT NULL,
     product_id INTEGER,
     color VARCHAR(40),
