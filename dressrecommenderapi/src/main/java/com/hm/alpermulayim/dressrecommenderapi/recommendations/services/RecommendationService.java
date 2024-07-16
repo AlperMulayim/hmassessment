@@ -1,5 +1,10 @@
 package com.hm.alpermulayim.dressrecommenderapi.recommendations.services;
 
+import com.hm.alpermulayim.dressrecommenderapi.historymanager.entites.CustomerHistoryAnalysis;
+import com.hm.alpermulayim.dressrecommenderapi.historymanager.entites.PurchaseHistory;
+import com.hm.alpermulayim.dressrecommenderapi.historymanager.repositories.PurchaseHistoryRepository;
+import com.hm.alpermulayim.dressrecommenderapi.historymanager.services.CustomerPurchaseHistoryAnalysis;
+import com.hm.alpermulayim.dressrecommenderapi.historymanager.services.PurchaseHistoryService;
 import com.hm.alpermulayim.dressrecommenderapi.products.entities.HmAccessory;
 import com.hm.alpermulayim.dressrecommenderapi.products.entities.HmClothes;
 import com.hm.alpermulayim.dressrecommenderapi.products.entities.HmShoes;
@@ -34,17 +39,21 @@ public class RecommendationService {
 
     private HmAccessoriesRepository accessoriesRepository;
 
+    private PurchaseHistoryService historyService;
+
     @Autowired
     public RecommendationService(HmProductService productService,
                                  ProductAttributesRepository attributesRepository,
                                  HmClothesRepository clothesRepository,
                                  HmShoesRepository shoesRepository,
-                                 HmAccessoriesRepository accessoriesRepository) {
+                                 HmAccessoriesRepository accessoriesRepository,
+                                 PurchaseHistoryService historyService) {
         this.productService = productService;
         this.attributesRepository = attributesRepository;
         this.clothesRepository = clothesRepository;
         this.shoesRepository = shoesRepository;
         this.accessoriesRepository = accessoriesRepository;
+        this.historyService = historyService;
     }
 
     public RecommendedRecipe getRecipes(){
@@ -107,6 +116,10 @@ public class RecommendationService {
         //SELECT bottom
 
         //SELECT shoe
+        List< PurchaseHistory> history  = historyService.getPurchaseHistoryForCustomer(1);
+
+        CustomerPurchaseHistoryAnalysis historyAnalysis = new CustomerPurchaseHistoryAnalysis();
+        CustomerHistoryAnalysis customerAnalysis = historyAnalysis.analyze(history);
 
         //SELECT accesory
 
