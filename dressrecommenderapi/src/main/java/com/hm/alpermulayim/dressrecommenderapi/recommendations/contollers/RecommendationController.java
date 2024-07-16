@@ -1,9 +1,7 @@
 package com.hm.alpermulayim.dressrecommenderapi.recommendations.contollers;
 
 import com.hm.alpermulayim.dressrecommenderapi.recommendations.dtos.RecipeRequest;
-import com.hm.alpermulayim.dressrecommenderapi.recommendations.dtos.RecommendedProduct;
 import com.hm.alpermulayim.dressrecommenderapi.recommendations.dtos.RecommendedRecipe;
-import com.hm.alpermulayim.dressrecommenderapi.recommendations.entities.ClothingRecepie;
 import com.hm.alpermulayim.dressrecommenderapi.recommendations.services.RecommendationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

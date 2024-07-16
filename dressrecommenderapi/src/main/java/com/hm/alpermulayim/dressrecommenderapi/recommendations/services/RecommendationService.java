@@ -14,16 +14,14 @@ import com.hm.alpermulayim.dressrecommenderapi.recommendations.dtos.RecipePriceP
 import com.hm.alpermulayim.dressrecommenderapi.recommendations.dtos.RecipeRequest;
 import com.hm.alpermulayim.dressrecommenderapi.recommendations.dtos.RecommendedProduct;
 import com.hm.alpermulayim.dressrecommenderapi.recommendations.dtos.RecommendedRecipe;
-import com.hm.alpermulayim.dressrecommenderapi.recommendations.entities.ClothingRecepie;
 import com.hm.alpermulayim.dressrecommenderapi.recommendations.utilities.CustomerBudget;
 import com.hm.alpermulayim.dressrecommenderapi.recommendations.utilities.CustomerBudgetCalculator;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -103,6 +101,17 @@ public class RecommendationService {
         //TODO: recepie will commented and scored create scoring table with userid and recepie id.
 
 
+        List<RecommendedProduct> recipeProducts = new ArrayList<>();
+        //SELECT top
+
+        //SELECT bottom
+
+        //SELECT shoe
+
+        //SELECT accesory
+
+
+
         List<RecommendedProduct> recommendedProducts = accessories.stream()
                 .map(product -> RecommendedProduct.builder()
                         .code(product.getCode())
@@ -112,11 +121,14 @@ public class RecommendationService {
                         .build())
                 .collect(Collectors.toList());
 
+        //ONLY BASED ON BROWNS;
 
 
+
+        //TODO: add recommended basket for this step.
 
         return RecommendedRecipe.builder()
-                .products(recommendedProducts)
+                .products(recommendedProducts.stream().filter(pr->pr.getAttribute().getColor().equals("brown")).collect(Collectors.toList()))
                 .build();
     }
 
@@ -134,5 +146,7 @@ public class RecommendationService {
     public CustomerBudget getCustomerBudget(Double totalBudget, RecipePricePreferences preferences){
         return new CustomerBudgetCalculator().getPrices(totalBudget,preferences);
     }
+
+
 
 }

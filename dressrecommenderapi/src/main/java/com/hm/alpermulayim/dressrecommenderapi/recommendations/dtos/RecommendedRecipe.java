@@ -1,6 +1,5 @@
 package com.hm.alpermulayim.dressrecommenderapi.recommendations.dtos;
 
-import com.hm.alpermulayim.dressrecommenderapi.products.entities.Product;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
