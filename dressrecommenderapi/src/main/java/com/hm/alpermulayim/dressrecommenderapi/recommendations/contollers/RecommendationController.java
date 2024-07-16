@@ -1,6 +1,6 @@
 package com.hm.alpermulayim.dressrecommenderapi.recommendations.contollers;
 
-import com.hm.alpermulayim.dressrecommenderapi.recommendations.dtos.RecepieRequest;
+import com.hm.alpermulayim.dressrecommenderapi.recommendations.dtos.RecipeRequest;
 import com.hm.alpermulayim.dressrecommenderapi.recommendations.dtos.RecommendedProduct;
 import com.hm.alpermulayim.dressrecommenderapi.recommendations.dtos.RecommendedRecipe;
 import com.hm.alpermulayim.dressrecommenderapi.recommendations.entities.ClothingRecepie;
@@ -25,9 +25,9 @@ public class RecommendationController {
     }
 
     @PostMapping
-    public RecommendedRecipe createRecepieWithMyPreferences(@RequestBody RecepieRequest recepieRequest){
-        System.out.println(recepieRequest);
-        return service.getRecipes();
+    public RecommendedRecipe createRecepieWithMyPreferences(@RequestBody RecipeRequest recipeRequest){
+        System.out.println(recipeRequest);
+        return service.getRecipesForPreferences(recipeRequest);
     }
 
 }

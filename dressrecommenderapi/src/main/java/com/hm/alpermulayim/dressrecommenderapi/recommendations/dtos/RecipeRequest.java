@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class RecepieRequest {
+public class RecipeRequest {
     private Integer userId;
     private RecepieType type;
-    private Double price;
+    private Double totalBudget;
     private RecipePricePreferences pricePreferences;
 }
