@@ -1,4 +1,4 @@
-create table hm_clothes (
+CREATE TABLE IF NOT EXISTS hm_clothes (
 	product_id INT,
 	name VARCHAR(100),
 	stock INT,

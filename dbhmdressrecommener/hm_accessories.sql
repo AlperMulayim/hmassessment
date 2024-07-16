@@ -1,17 +1,19 @@
-create table hm_accessories (
+CREATE TABLE IF NOT EXISTS hm_accessories (
 	product_id INT,
 	name VARCHAR(7),
 	stock INT,
 	product_code VARCHAR(50),
 	price DECIMAL(5,2)
 );
-insert into hm_accessories (product_id, name, stock, product_code, price) values (81, 'Belts', 19, '48951-3158', 3.19);
-insert into hm_accessories (product_id, name, stock, product_code, price) values (82, 'Scarves', 21, '0085-4331', 67.43);
-insert into hm_accessories (product_id, name, stock, product_code, price) values (83, 'Tie', 3, '52125-610', 89.69);
-insert into hm_accessories (product_id, name, stock, product_code, price) values (84, 'Belts', 91, '63304-790', 11.74);
-insert into hm_accessories (product_id, name, stock, product_code, price) values (85, 'Gloves', 17, '36987-2629', 19.53);
-insert into hm_accessories (product_id, name, stock, product_code, price) values (86, 'Wallets', 74, '0781-5816', 9.89);
-insert into hm_accessories (product_id, name, stock, product_code, price) values (87, 'Wallets', 99, '64720-183', 22.8);
-insert into hm_accessories (product_id, name, stock, product_code, price) values (88, 'Belts', 12, '0009-0395', 26.01);
-insert into hm_accessories (product_id, name, stock, product_code, price) values (89, 'Scarves', 88, '25021-813', 20.8);
-insert into hm_accessories (product_id, name, stock, product_code, price) values (90, 'Tie', 52, '36987-1429', 7.19);
+
+
+INSERT INTO hm_accessories (product_id, name, stock, product_code, price) values (81, 'Belts', 19, '48951-3158', 3.19);
+INSERT INTO hm_accessories (product_id, name, stock, product_code, price) values (82, 'Scarves', 21, '0085-4331', 67.43);
+INSERT INTO hm_accessories (product_id, name, stock, product_code, price) values (83, 'Tie', 3, '52125-610', 89.69);
+INSERT INTO hm_accessories (product_id, name, stock, product_code, price) values (84, 'Belts', 91, '63304-790', 11.74);
+INSERT INTO hm_accessories (product_id, name, stock, product_code, price) values (85, 'Gloves', 17, '36987-2629', 19.53);
+INSERT INTO hm_accessories (product_id, name, stock, product_code, price) values (86, 'Wallets', 74, '0781-5816', 9.89);
+INSERT INTO hm_accessories (product_id, name, stock, product_code, price) values (87, 'Wallets', 99, '64720-183', 22.8);
+INSERT INTO hm_accessories (product_id, name, stock, product_code, price) values (88, 'Belts', 12, '0009-0395', 26.01);
+INSERT INTO hm_accessories (product_id, name, stock, product_code, price) values (89, 'Scarves', 88, '25021-813', 20.8);
+INSERT INTO hm_accessories (product_id, name, stock, product_code, price) values (90, 'Tie', 52, '36987-1429', 7.19);
