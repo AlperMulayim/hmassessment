@@ -21,7 +21,7 @@ public class RecommendationController {
 
     @GetMapping
     public RecommendedRecipe getAllRecepies(){
-        return service.getRecipes();
+        return service.getDefaultRecommendedRecipe();
     }
 
     @PostMapping

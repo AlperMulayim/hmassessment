@@ -55,29 +55,19 @@ public class RecommendationService {
         this.recipeService = recipeService;
     }
 
-    public RecommendedRecipe getRecipes() {
+    public RecommendedRecipe getDefaultRecommendedRecipe() {
 
-        List<Product> products = productService.getProducts().subList(37, 44);
+        List<HmClothes> topClothes = getUserBudgetClothesByPrice(Double.MAX_VALUE, ClotheType.top);
+        List<HmClothes> bottomClothes = getUserBudgetClothesByPrice(Double.MAX_VALUE, ClotheType.bottom);
+        List<HmShoes> shoes = getUserBudgetShoes(Double.MAX_VALUE);
+        List<HmAccessory> accessories = getUserBudgetAccessories(Double.MAX_VALUE);
 
-        List<RecommendedProduct> recommendedProducts = products.stream()
-                .map(product -> RecommendedProduct.builder()
-                        .code(product.getCode())
-                        .price(product.getPrice())
-                        .name(product.getName())
-                        .attribute(attributesRepository.findByProductId(product.getId()).get())
-                        .build())
-                .collect(Collectors.toList());
-
-        Double totalPrice = products.stream()
-                .mapToDouble(product -> product.getPrice().doubleValue())
-                .sum();
-
-        return RecommendedRecipe.builder()
-                .price(new BigDecimal(totalPrice).setScale(2, RoundingMode.DOWN))
-                .code("RCP-123")
-                .name("wedding")
-                .products(recommendedProducts)
-                .build();
+        return generateDefaultRecipe("HM's-Favorite-Recipe",
+                topClothes.isEmpty() ? null : topClothes.get(0),
+                bottomClothes.isEmpty() ? null : bottomClothes.get(0),
+                shoes.isEmpty() ? null : shoes.get(0),
+                accessories.isEmpty() ? null : accessories.get(0)
+        );
     }
 
 
@@ -95,13 +85,13 @@ public class RecommendationService {
         CustomerHistoryAnalysis customerAnalysis = historyAnalyseManager.analyze(history);
 
         if (history.isEmpty()) {
-             recommendedRecipes.add(generateDefaultRecipe(recipeRequest.getRecipeName(),
+            recommendedRecipes.add(generateDefaultRecipe(recipeRequest.getRecipeName(),
                     topClothes.isEmpty() ? null : topClothes.get(0),
-                    bottomClothes.isEmpty() ? null :bottomClothes.get(0),
+                    bottomClothes.isEmpty() ? null : bottomClothes.get(0),
                     shoes.isEmpty() ? null : shoes.get(0),
                     accessories.isEmpty() ? null : accessories.get(0)
             ));
-             return recommendedRecipes;
+            return recommendedRecipes;
         }
 
         topClothes = applyCustomerAnalysisFilterForClothes(topClothes, customerAnalysis);
@@ -243,7 +233,7 @@ public class RecommendationService {
             recommendedRecipes.add(
                     RecommendedRecipe.builder()
                             .name(recipeName)
-                            .code("HM-Recipe-" + recipeName + "-" + i+1)
+                            .code("HM-Recipe-" + recipeName + "-" + i + 1)
                             .price(new BigDecimal(totalCost).setScale(2, RoundingMode.DOWN))
                             .products(recommendedProducts)
                             .build()
