@@ -111,37 +111,20 @@ public class RecommendationService {
             List<String> recipeTags = recipe.get().getTags().stream()
                     .map(RecipeTag::getName).toList();
 
-            topClothes = topClothes.stream()
-                    .filter(clothe -> recipeTags.contains(clothe.getAttributes().getStyle().toLowerCase()))
-                    .sorted(Comparator.comparing(HmClothes::getPrice).reversed())
-                    .collect(Collectors.toList());
-
-            bottomClothes = bottomClothes.stream()
-                    .filter(clothe -> recipeTags.contains(clothe.getAttributes().getStyle().toLowerCase()))
-                    .sorted(Comparator.comparing(HmClothes::getPrice).reversed())
-                    .collect(Collectors.toList());
-
-
-            shoes = shoes.stream()
-                    .filter(shoe -> recipeTags.contains(shoe.getAttributes().getStyle().toLowerCase()))
-                    .sorted(Comparator.comparing(HmShoes::getPrice).reversed())
-                    .collect(Collectors.toList());
-
-            accessories = accessories.stream()
-                    .filter(accs -> recipeTags.contains(accs.getAttributes().getStyle().toLowerCase()))
-                    .sorted(Comparator.comparing(HmAccessory::getPrice).reversed())
-                    .collect(Collectors.toList());
-
+            topClothes = filterAndSortClothesByRecipeTags(topClothes,recipeTags);
+            bottomClothes = filterAndSortClothesByRecipeTags(bottomClothes,recipeTags);
+            shoes = filterAndSortShoesByRecipeTags(shoes,recipeTags);
+            accessories = filterAndSortAccessoriesByRecipeTags(accessories,recipeTags);
 
             Integer totalRecipe = recipeRequest.getNumOfRecipe() == null ? defaultNumOfRecipe : recipeRequest.getNumOfRecipe();
 
-          recommendedRecipes = createRecipesFromSelectProducts(totalRecipe,
+            recommendedRecipes = createRecipesFromSelectProducts(totalRecipe,
                     recipeRequest.getRecipeName(),
                     topClothes,
                     bottomClothes,
                     shoes,
                     accessories
-                    );
+            );
         }
         return recommendedRecipes;
     }
@@ -201,12 +184,33 @@ public class RecommendationService {
                 .sum();
     }
 
+    public List<HmClothes> filterAndSortClothesByRecipeTags(List<HmClothes> clothes, List<String> recipeTags) {
+        return clothes.stream()
+                .filter(clothe -> recipeTags.contains(clothe.getAttributes().getStyle().toLowerCase()))
+                .sorted(Comparator.comparing(HmClothes::getPrice).reversed())
+                .collect(Collectors.toList());
+    }
+
+    public List<HmShoes> filterAndSortShoesByRecipeTags(List<HmShoes> shoes, List<String> recipeTags){
+       return shoes.stream()
+                .filter(shoe -> recipeTags.contains(shoe.getAttributes().getStyle().toLowerCase()))
+                .sorted(Comparator.comparing(HmShoes::getPrice).reversed())
+                .collect(Collectors.toList());
+    }
+
+    public List<HmAccessory> filterAndSortAccessoriesByRecipeTags(List<HmAccessory> accessories, List<String> recipeTags){
+      return  accessories.stream()
+                .filter(accs -> recipeTags.contains(accs.getAttributes().getStyle().toLowerCase()))
+                .sorted(Comparator.comparing(HmAccessory::getPrice).reversed())
+                .collect(Collectors.toList());
+    }
+
     public List<RecommendedRecipe> createRecipesFromSelectProducts(Integer totalRecipe,
-                                                        String recipeName,
-                                                        List<HmClothes> tops,
-                                                        List<HmClothes> bottoms,
-                                                        List<HmShoes> shoes,
-                                                        List<HmAccessory> accessories) {
+                                                                   String recipeName,
+                                                                   List<HmClothes> tops,
+                                                                   List<HmClothes> bottoms,
+                                                                   List<HmShoes> shoes,
+                                                                   List<HmAccessory> accessories) {
 
         List<RecommendedRecipe> recommendedRecipes = new ArrayList<>();
 
