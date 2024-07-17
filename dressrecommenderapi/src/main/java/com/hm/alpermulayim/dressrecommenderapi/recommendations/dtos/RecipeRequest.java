@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class RecipeRequest {
     private Integer userId;
-    private RecepieType type;
+    private RecipeType type;
     private Double totalBudget;
     private RecipePricePreferences pricePreferences;
 }

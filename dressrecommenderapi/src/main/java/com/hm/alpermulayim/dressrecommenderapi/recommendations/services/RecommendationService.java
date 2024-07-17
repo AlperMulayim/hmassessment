@@ -11,10 +11,9 @@ import com.hm.alpermulayim.dressrecommenderapi.products.repositories.HmClothesRe
 import com.hm.alpermulayim.dressrecommenderapi.products.repositories.HmShoesRepository;
 import com.hm.alpermulayim.dressrecommenderapi.products.repositories.ProductAttributesRepository;
 import com.hm.alpermulayim.dressrecommenderapi.products.services.HmProductService;
-import com.hm.alpermulayim.dressrecommenderapi.recommendations.dtos.RecipePricePreferences;
-import com.hm.alpermulayim.dressrecommenderapi.recommendations.dtos.RecipeRequest;
-import com.hm.alpermulayim.dressrecommenderapi.recommendations.dtos.RecommendedProduct;
-import com.hm.alpermulayim.dressrecommenderapi.recommendations.dtos.RecommendedRecipe;
+import com.hm.alpermulayim.dressrecommenderapi.recipes.Recipe;
+import com.hm.alpermulayim.dressrecommenderapi.recipes.services.RecipeService;
+import com.hm.alpermulayim.dressrecommenderapi.recommendations.dtos.*;
 import com.hm.alpermulayim.dressrecommenderapi.recommendations.utilities.CustomerBudget;
 import com.hm.alpermulayim.dressrecommenderapi.recommendations.utilities.CustomerBudgetCalculator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +22,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -40,6 +40,8 @@ public class RecommendationService {
 
     private CustomerPurchaseHistoryAnalyseManager historyAnalyseManager;
 
+    private RecipeService recipeService;
+
     @Autowired
     public RecommendationService(HmProductService productService,
                                  ProductAttributesRepository attributesRepository,
@@ -47,7 +49,8 @@ public class RecommendationService {
                                  HmShoesRepository shoesRepository,
                                  HmAccessoriesRepository accessoriesRepository,
                                  PurchaseHistoryService historyService,
-                                 CustomerPurchaseHistoryAnalyseManager analyseManager) {
+                                 CustomerPurchaseHistoryAnalyseManager analyseManager,
+                                 RecipeService recipeService) {
         this.productService = productService;
         this.attributesRepository = attributesRepository;
         this.clothesRepository = clothesRepository;
@@ -55,6 +58,7 @@ public class RecommendationService {
         this.accessoriesRepository = accessoriesRepository;
         this.historyService = historyService;
         this.historyAnalyseManager = analyseManager;
+        this.recipeService = recipeService;
     }
 
     public RecommendedRecipe getRecipes(){
@@ -85,14 +89,14 @@ public class RecommendationService {
     }
 
 
-    public RecommendedRecipe getRecipesForPreferences(RecipeRequest recepieRequest){
+    public RecommendedRecipe getRecipesForPreferences(RecipeRequest recipeRequest){
         //TODO: Get products  < price
         //TODO: filter top clothes with user history preferences < % price clothes preference
         //TODO: filter bottom clothes with user history preferences < % price clothes preference
         //TODO: filter shoes with user history preferences < % price shoes preference
         //TODO: filter accessories with user history preferences < % price accessories preference
 
-        CustomerBudget budget = getCustomerBudget(recepieRequest.getTotalBudget(),recepieRequest.getPricePreferences());
+        CustomerBudget budget = getCustomerBudget(recipeRequest.getTotalBudget(),recipeRequest.getPricePreferences());
 
         List<HmClothes> topClothes = getUserBudgetClothesByPrice(budget.getTop(),ClotheType.top);
         List<HmClothes> bottomClothes = getUserBudgetClothesByPrice(budget.getBottom(),ClotheType.bottom);
@@ -109,7 +113,7 @@ public class RecommendationService {
         //SELECT bottom
 
         //SELECT shoe
-        List<PurchaseHistory> history = historyService.getPurchaseHistoryForCustomer(1);
+        List<PurchaseHistory> history = historyService.getPurchaseHistoryForCustomer(recipeRequest.getUserId());
 
         CustomerHistoryAnalysis customerAnalysis = historyAnalyseManager.analyze(history);
 
@@ -124,8 +128,15 @@ public class RecommendationService {
        shoes = applyCustomerAnalysisFilterForShoes(shoes,customerAnalysis);
        accessories = applyCustomerAnalysisFilterForAccessories(accessories,customerAnalysis);
 
+       Optional<Recipe> recipe = recipeService.getRecipe(recipeRequest.getType().name());
 
-       //create recommendation boxes;
+
+       if(recipe.isPresent()){
+            //apply filters for request recipe.
+       }
+
+       //create recommendation boxes; check request wedding swimming like and add filter.
+
 
         List<RecommendedProduct> recommendedProducts = topClothes.stream()
                 .map(product -> RecommendedProduct.builder()

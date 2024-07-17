@@ -1,5 +1,5 @@
 package com.hm.alpermulayim.dressrecommenderapi.recommendations.dtos;
 
-public enum RecepieType {
+public enum RecipeType {
     WEDDING,SPORT,SWIMMING,PARTY
 }
