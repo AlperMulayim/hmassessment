@@ -6,6 +6,10 @@ spring:
     password: rootpass
   jpa:
     hibernate:
-      ddl-auto: validate
-    generate-ddl: true
-    show-sql: true
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+  sql:
+    init:
+      mode: always

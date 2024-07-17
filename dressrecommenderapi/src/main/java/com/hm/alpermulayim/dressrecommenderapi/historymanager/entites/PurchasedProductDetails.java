@@ -15,6 +15,9 @@ public class PurchasedProductDetails {
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "product_name")
+    private String productName;
+
     @Column(name = "color")
     private String color;
 
