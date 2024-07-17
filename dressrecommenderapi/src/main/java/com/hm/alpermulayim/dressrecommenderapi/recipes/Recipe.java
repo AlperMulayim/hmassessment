@@ -1,11 +1,17 @@
 package com.hm.alpermulayim.dressrecommenderapi.recipes;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Entity
 @Table(name = "hm_recipes")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Recipe {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -12,6 +12,7 @@ import com.hm.alpermulayim.dressrecommenderapi.products.repositories.HmShoesRepo
 import com.hm.alpermulayim.dressrecommenderapi.products.repositories.ProductAttributesRepository;
 import com.hm.alpermulayim.dressrecommenderapi.products.services.HmProductService;
 import com.hm.alpermulayim.dressrecommenderapi.recipes.Recipe;
+import com.hm.alpermulayim.dressrecommenderapi.recipes.RecipeTag;
 import com.hm.alpermulayim.dressrecommenderapi.recipes.services.RecipeService;
 import com.hm.alpermulayim.dressrecommenderapi.recommendations.dtos.*;
 import com.hm.alpermulayim.dressrecommenderapi.recommendations.utilities.CustomerBudget;
@@ -20,10 +21,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.math.RoundingMode;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -76,12 +75,12 @@ public class RecommendationService {
                         .build())
                 .collect(Collectors.toList());
 
-        BigDecimal totalPrice = BigDecimal.valueOf(products.stream()
+        Double totalPrice = products.stream()
                 .mapToDouble(product -> product.getPrice().doubleValue())
-                .sum());
+                .sum();
 
         return RecommendedRecipe.builder()
-                .price(totalPrice)
+                .price(new BigDecimal(totalPrice).setScale(2,RoundingMode.DOWN))
                 .code("RCP-123")
                 .name("wedding")
                 .products(recommendedProducts)
@@ -95,6 +94,7 @@ public class RecommendationService {
         //TODO: filter bottom clothes with user history preferences < % price clothes preference
         //TODO: filter shoes with user history preferences < % price shoes preference
         //TODO: filter accessories with user history preferences < % price accessories preference
+        List<Product> selectedProducts = new LinkedList<>();
 
         CustomerBudget budget = getCustomerBudget(recipeRequest.getTotalBudget(),recipeRequest.getPricePreferences());
 
@@ -128,17 +128,50 @@ public class RecommendationService {
        shoes = applyCustomerAnalysisFilterForShoes(shoes,customerAnalysis);
        accessories = applyCustomerAnalysisFilterForAccessories(accessories,customerAnalysis);
 
-       Optional<Recipe> recipe = recipeService.getRecipe(recipeRequest.getType().name());
+       Optional<Recipe> recipe = recipeService.getRecipe(recipeRequest.getRecipeName());
 
 
        if(recipe.isPresent()){
-            //apply filters for request recipe.
+          List<String> recipeTags = recipe.get().getTags().stream()
+                  .map(RecipeTag::getName).toList();
+
+          topClothes = topClothes.stream()
+                  .filter(clothe-> recipeTags.contains(clothe.getAttributes().getStyle().toLowerCase()))
+                  .collect(Collectors.toList());
+
+           bottomClothes = bottomClothes.stream()
+                   .filter(clothe-> recipeTags.contains(clothe.getAttributes().getStyle().toLowerCase()))
+                   .collect(Collectors.toList());
+
+
+           shoes = shoes.stream()
+                   .filter(shoe-> recipeTags.contains(shoe.getAttributes().getStyle().toLowerCase()))
+                   .collect(Collectors.toList());
+
+           accessories = accessories.stream()
+                   .filter(shoe-> recipeTags.contains(shoe.getAttributes().getStyle().toLowerCase()))
+                   .collect(Collectors.toList());
+
+
+           if(!accessories.isEmpty()){
+               selectedProducts.add(accessories.get(0));
+           }
+           if(!topClothes.isEmpty()){
+               selectedProducts.add(topClothes.get(0));
+           }
+           if(!bottomClothes.isEmpty()) {
+               selectedProducts.add(bottomClothes.get(0));
+           }
+           if(!shoes.isEmpty()){
+               selectedProducts.add(shoes.get(0));
+           }
+
        }
 
        //create recommendation boxes; check request wedding swimming like and add filter.
 
 
-        List<RecommendedProduct> recommendedProducts = topClothes.stream()
+        List<RecommendedProduct> recommendedProducts = selectedProducts.stream()
                 .map(product -> RecommendedProduct.builder()
                         .code(product.getCode())
                         .price(product.getPrice())
@@ -150,10 +183,15 @@ public class RecommendationService {
         //ONLY BASED ON BROWNS;
 
 
+        Double totalCost = selectedProducts.stream()
+                .mapToDouble(prod-> prod.getPrice().doubleValue())
+                .sum();
 
         //TODO: add recommended basket for this step.
 
         return RecommendedRecipe.builder()
+                .name(recipeRequest.getRecipeName())
+                .price(new BigDecimal(totalCost).setScale(2,RoundingMode.DOWN))
                 .products(recommendedProducts)
                 .build();
     }
@@ -175,8 +213,8 @@ public class RecommendationService {
 
     public List<HmClothes> applyCustomerAnalysisFilterForClothes(List<HmClothes> clothes, CustomerHistoryAnalysis analysis){
        return clothes.stream()
-                .filter(top-> analysis.getColors().contains(top.getAttributes().getColor().toLowerCase()) ||
-                        analysis.getMaterials().contains(top.getAttributes().getMaterial().toLowerCase()))
+                .filter(clothe-> analysis.getColors().contains(clothe.getAttributes().getColor().toLowerCase()) ||
+                        analysis.getMaterials().contains(clothe.getAttributes().getMaterial().toLowerCase()))
                 .collect(Collectors.toList());
     }
 
