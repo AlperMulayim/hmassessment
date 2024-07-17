@@ -19,7 +19,6 @@ import com.hm.alpermulayim.dressrecommenderapi.recommendations.utilities.Custome
 import com.hm.alpermulayim.dressrecommenderapi.recommendations.utilities.CustomerBudgetCalculator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.comparator.Comparators;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -95,6 +94,10 @@ public class RecommendationService {
         List<PurchaseHistory> history = historyService.getPurchaseHistoryForCustomer(recipeRequest.getUserId());
         CustomerHistoryAnalysis customerAnalysis = historyAnalyseManager.analyze(history);
 
+        if (history.isEmpty()) {
+            //add exception
+        }
+
         topClothes = applyCustomerAnalysisFilterForClothes(topClothes, customerAnalysis);
         bottomClothes = applyCustomerAnalysisFilterForClothes(bottomClothes, customerAnalysis);
         shoes = applyCustomerAnalysisFilterForShoes(shoes, customerAnalysis);
@@ -106,10 +109,10 @@ public class RecommendationService {
             List<String> recipeTags = recipe.get().getTags().stream()
                     .map(RecipeTag::getName).toList();
 
-            topClothes = filterAndSortClothesByRecipeTags(topClothes,recipeTags);
-            bottomClothes = filterAndSortClothesByRecipeTags(bottomClothes,recipeTags);
-            shoes = filterAndSortShoesByRecipeTags(shoes,recipeTags);
-            accessories = filterAndSortAccessoriesByRecipeTags(accessories,recipeTags);
+            topClothes = filterAndSortClothesByRecipeTags(topClothes, recipeTags);
+            bottomClothes = filterAndSortClothesByRecipeTags(bottomClothes, recipeTags);
+            shoes = filterAndSortShoesByRecipeTags(shoes, recipeTags);
+            accessories = filterAndSortAccessoriesByRecipeTags(accessories, recipeTags);
 
             Integer totalRecipe = recipeRequest.getNumOfRecipe() == null ? defaultNumOfRecipe : recipeRequest.getNumOfRecipe();
 
@@ -186,15 +189,15 @@ public class RecommendationService {
                 .collect(Collectors.toList());
     }
 
-    public List<HmShoes> filterAndSortShoesByRecipeTags(List<HmShoes> shoes, List<String> recipeTags){
-       return shoes.stream()
+    public List<HmShoes> filterAndSortShoesByRecipeTags(List<HmShoes> shoes, List<String> recipeTags) {
+        return shoes.stream()
                 .filter(shoe -> recipeTags.contains(shoe.getAttributes().getStyle().toLowerCase()))
                 .sorted(Comparator.comparing(HmShoes::getPrice).reversed())
                 .collect(Collectors.toList());
     }
 
-    public List<HmAccessory> filterAndSortAccessoriesByRecipeTags(List<HmAccessory> accessories, List<String> recipeTags){
-      return  accessories.stream()
+    public List<HmAccessory> filterAndSortAccessoriesByRecipeTags(List<HmAccessory> accessories, List<String> recipeTags) {
+        return accessories.stream()
                 .filter(accs -> recipeTags.contains(accs.getAttributes().getStyle().toLowerCase()))
                 .sorted(Comparator.comparing(HmAccessory::getPrice).reversed())
                 .collect(Collectors.toList());
@@ -208,7 +211,7 @@ public class RecommendationService {
                                                                    List<HmAccessory> accessories) {
 
         List<RecommendedRecipe> recommendedRecipes = new ArrayList<>();
-
+        //selection algorithm
         for (int i = 0; i < totalRecipe; ++i) {
             List<Product> selectedProducts = new ArrayList<>();
             if (!accessories.isEmpty()) {
@@ -241,5 +244,27 @@ public class RecommendationService {
             );
         }
         return recommendedRecipes;
+    }
+
+    public RecommendedRecipe generateDefaultRecipe(String recipeName,
+                                                   HmClothes top,
+                                                   HmClothes bottom,
+                                                   HmShoes shoes,
+                                                   HmAccessory accessory) {
+
+
+        List<Product> products = List.of(top, bottom, shoes, accessory);
+        List<RecommendedProduct> recommendedProducts = getRecommendedProducts(products);
+
+        Double totalPrice = products.stream()
+                .mapToDouble(product -> product.getPrice().doubleValue())
+                .sum();
+
+        return RecommendedRecipe.builder()
+                .name(recipeName)
+                .code("Recipe-" + recipeName + "-" + "GENERATED_SYTEM")
+                .price(new BigDecimal(totalPrice).setScale(2, RoundingMode.DOWN))
+                .products(recommendedProducts)
+                .build();
     }
 }
