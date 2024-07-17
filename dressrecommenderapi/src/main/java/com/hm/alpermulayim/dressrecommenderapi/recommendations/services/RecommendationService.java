@@ -19,6 +19,7 @@ import com.hm.alpermulayim.dressrecommenderapi.recommendations.utilities.Custome
 import com.hm.alpermulayim.dressrecommenderapi.recommendations.utilities.CustomerBudgetCalculator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.comparator.Comparators;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -137,19 +138,23 @@ public class RecommendationService {
 
           topClothes = topClothes.stream()
                   .filter(clothe-> recipeTags.contains(clothe.getAttributes().getStyle().toLowerCase()))
+                  .sorted(Comparator.comparing(HmClothes::getPrice).reversed())
                   .collect(Collectors.toList());
 
            bottomClothes = bottomClothes.stream()
                    .filter(clothe-> recipeTags.contains(clothe.getAttributes().getStyle().toLowerCase()))
+                   .sorted(Comparator.comparing(HmClothes::getPrice).reversed())
                    .collect(Collectors.toList());
 
 
            shoes = shoes.stream()
                    .filter(shoe-> recipeTags.contains(shoe.getAttributes().getStyle().toLowerCase()))
+                   .sorted(Comparator.comparing(HmShoes::getPrice).reversed())
                    .collect(Collectors.toList());
 
            accessories = accessories.stream()
-                   .filter(shoe-> recipeTags.contains(shoe.getAttributes().getStyle().toLowerCase()))
+                   .filter(accs-> recipeTags.contains(accs.getAttributes().getStyle().toLowerCase()))
+                   .sorted(Comparator.comparing(HmAccessory::getPrice).reversed())
                    .collect(Collectors.toList());
 
 
