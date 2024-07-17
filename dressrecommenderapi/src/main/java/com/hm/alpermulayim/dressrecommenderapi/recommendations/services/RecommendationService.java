@@ -28,18 +28,13 @@ import java.util.stream.Collectors;
 
 @Service
 public class RecommendationService {
-
     private HmProductService productService;
     private ProductAttributesRepository attributesRepository;
     private HmClothesRepository clothesRepository;
     private HmShoesRepository shoesRepository;
-
     private HmAccessoriesRepository accessoriesRepository;
-
     private PurchaseHistoryService historyService;
-
     private CustomerPurchaseHistoryAnalyseManager historyAnalyseManager;
-
     private RecipeService recipeService;
 
     @Autowired
