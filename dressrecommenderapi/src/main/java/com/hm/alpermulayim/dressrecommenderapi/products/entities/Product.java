@@ -30,4 +30,8 @@ public abstract class Product {
     @Column(name = "stock")
     private Integer stock;
 
+    @OneToOne
+    @JoinColumn(name = "product_id")
+    private ProductAttributes attributes;
+
 }

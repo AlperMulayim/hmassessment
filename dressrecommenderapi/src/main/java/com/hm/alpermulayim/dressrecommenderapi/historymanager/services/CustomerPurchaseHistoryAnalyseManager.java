@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 public class CustomerPurchaseHistoryAnalyseManager {
 
     public CustomerHistoryAnalysis analyze(List<PurchaseHistory> history){
+
         List<PurchasedProductDetails> productDetails = history.stream()
                 .flatMap(c-> c.getProductDetails().stream())
                 .collect(Collectors.toList());
@@ -37,15 +38,25 @@ public class CustomerPurchaseHistoryAnalyseManager {
                     .favStyle(findMaxFrequentInMap(styleFrequency))
                     .favColor(findMaxFrequentInMap(colorFrequency))
                     .favSeason(findMaxFrequentInMap(seasonFrequency))
+                    .colors(getKeysListFromMap(colorFrequency))
+                    .materials(getKeysListFromMap(materialFrequency))
+                    .styles(getKeysListFromMap(styleFrequency))
+                    .seasons(getKeysListFromMap(seasonFrequency))
                     .build();
     }
 
     private Optional<String> findMaxFrequentInMap(Map<String,Long> map){
-        Optional<Map.Entry<String,Long>> maxEntry =  map.entrySet().stream().max(Comparator.comparing(Map.Entry::getValue));
+        Optional<Map.Entry<String,Long>> maxEntry =  map.entrySet().stream()
+                .max(Comparator.comparing(Map.Entry::getValue));
+
         if(maxEntry.isPresent()){
             return Optional.of(maxEntry.get().getKey());
         }
         return Optional.empty();
+    }
+
+    private Set<String> getKeysListFromMap(Map<String,Long> map){
+        return map.keySet().stream().map(String::toLowerCase).collect(Collectors.toSet());
     }
 
 }

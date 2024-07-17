@@ -1,14 +1,3 @@
-CREATE TABLE IF NOT EXISTS hm_clothes (
-	product_id INT,
-	name VARCHAR(100),
-	stock INT,
-	size VARCHAR(3),
-	price DECIMAL(5,2),
-	product_code VARCHAR(50),
-	clothe_type VARCHAR(10)
-);
-
--- Sample data for hm_clothes table
 INSERT INTO hm_clothes (product_id, name, stock, size, price, product_code, clothe_type) VALUES
 (1, 'Jeans', 50, 'M', 39.99, 'HM001', 'bottom'),
 (2, 'Chinos', 30, 'L', 49.99, 'HM002', 'bottom'),

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -21,4 +22,8 @@ public class CustomerHistoryAnalysis {
    private Optional<String> favStyle;
    private Optional<String> favMaterial;
    private Optional<String> favSeason;
+   private Set<String> colors;
+   private Set<String> materials;
+   private Set<String> styles;
+   private Set<String> seasons;
 }

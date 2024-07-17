@@ -4,10 +4,7 @@ import com.hm.alpermulayim.dressrecommenderapi.historymanager.entites.CustomerHi
 import com.hm.alpermulayim.dressrecommenderapi.historymanager.entites.PurchaseHistory;
 import com.hm.alpermulayim.dressrecommenderapi.historymanager.services.CustomerPurchaseHistoryAnalyseManager;
 import com.hm.alpermulayim.dressrecommenderapi.historymanager.services.PurchaseHistoryService;
-import com.hm.alpermulayim.dressrecommenderapi.products.entities.HmAccessory;
-import com.hm.alpermulayim.dressrecommenderapi.products.entities.HmClothes;
-import com.hm.alpermulayim.dressrecommenderapi.products.entities.HmShoes;
-import com.hm.alpermulayim.dressrecommenderapi.products.entities.Product;
+import com.hm.alpermulayim.dressrecommenderapi.products.entities.*;
 import com.hm.alpermulayim.dressrecommenderapi.products.enums.ClotheType;
 import com.hm.alpermulayim.dressrecommenderapi.products.repositories.HmAccessoriesRepository;
 import com.hm.alpermulayim.dressrecommenderapi.products.repositories.HmClothesRepository;
@@ -26,6 +23,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -104,14 +102,6 @@ public class RecommendationService {
 
 
         System.out.println(topClothes);
-        //TODO: selection algorithm , Knapsack.
-
-        //TODO: create recommended recipe
-
-        //TODO: save recommended recepie
-
-        //TODO: recepie will commented and scored create scoring table with userid and recepie id.
-
 
         List<RecommendedProduct> recipeProducts = new ArrayList<>();
         //SELECT top
@@ -119,20 +109,30 @@ public class RecommendationService {
         //SELECT bottom
 
         //SELECT shoe
-        List< PurchaseHistory> history  = historyService.getPurchaseHistoryForCustomer(1);
+        List<PurchaseHistory> history = historyService.getPurchaseHistoryForCustomer(1);
 
         CustomerHistoryAnalysis customerAnalysis = historyAnalyseManager.analyze(history);
 
         //SELECT accesory
 
+
+        System.out.println( attributesRepository.findByColorIn(Set.of("black","red")));
         System.out.println(customerAnalysis);
 
-        List<RecommendedProduct> recommendedProducts = accessories.stream()
+       topClothes = applyCustomerAnalysisFilterForClothes(topClothes,customerAnalysis);
+       bottomClothes = applyCustomerAnalysisFilterForClothes(bottomClothes,customerAnalysis);
+       shoes = applyCustomerAnalysisFilterForShoes(shoes,customerAnalysis);
+       accessories = applyCustomerAnalysisFilterForAccessories(accessories,customerAnalysis);
+
+
+       //create recommendation boxes;
+
+        List<RecommendedProduct> recommendedProducts = topClothes.stream()
                 .map(product -> RecommendedProduct.builder()
                         .code(product.getCode())
                         .price(product.getPrice())
                         .name(product.getName())
-                        .attribute(attributesRepository.findByProductId(product.getId()).get())
+                        .attribute(product.getAttributes())
                         .build())
                 .collect(Collectors.toList());
 
@@ -143,7 +143,7 @@ public class RecommendationService {
         //TODO: add recommended basket for this step.
 
         return RecommendedRecipe.builder()
-                .products(recommendedProducts.stream().filter(pr->pr.getAttribute().getColor().equals("brown")).collect(Collectors.toList()))
+                .products(recommendedProducts)
                 .build();
     }
 
@@ -162,6 +162,24 @@ public class RecommendationService {
         return new CustomerBudgetCalculator().getPrices(totalBudget,preferences);
     }
 
+    public List<HmClothes> applyCustomerAnalysisFilterForClothes(List<HmClothes> clothes, CustomerHistoryAnalysis analysis){
+       return clothes.stream()
+                .filter(top-> analysis.getColors().contains(top.getAttributes().getColor().toLowerCase()) ||
+                        analysis.getMaterials().contains(top.getAttributes().getMaterial().toLowerCase()))
+                .collect(Collectors.toList());
+    }
 
+    public List<HmShoes> applyCustomerAnalysisFilterForShoes(List<HmShoes> shoes, CustomerHistoryAnalysis analysis){
+        return shoes.stream()
+                .filter(top-> analysis.getColors().contains(top.getAttributes().getColor().toLowerCase()) ||
+                        analysis.getMaterials().contains(top.getAttributes().getMaterial().toLowerCase()))
+                .collect(Collectors.toList());
+    }
 
+    public List<HmAccessory> applyCustomerAnalysisFilterForAccessories(List<HmAccessory> shoes, CustomerHistoryAnalysis analysis){
+        return shoes.stream()
+                .filter(top-> analysis.getColors().contains(top.getAttributes().getColor().toLowerCase()) ||
+                        analysis.getMaterials().contains(top.getAttributes().getMaterial().toLowerCase()))
+                .collect(Collectors.toList());
+    }
 }

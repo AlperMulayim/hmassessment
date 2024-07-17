@@ -1,13 +1,3 @@
-CREATE TABLE IF NOT EXISTS hm_product_attributes (
-	id INTEGER NOT NULL,
-    product_id INTEGER,
-    color VARCHAR(40),
-    material VARCHAR(80),
-    style VARCHAR(90),
-    season VARCHAR(80),
-    CONSTRAINT PRIMARY KEY(id)
-);
-
 INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 1, 1, "red","jean","summer","casual");
 INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 2, 2, "brown","linen","summer","formal");
 INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 3, 3, "brown","cotton","summer","sport");

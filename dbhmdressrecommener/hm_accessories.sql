@@ -1,12 +1,3 @@
-CREATE TABLE IF NOT EXISTS hm_accessories (
-	product_id INT,
-	name VARCHAR(7),
-	stock INT,
-	product_code VARCHAR(50),
-	price DECIMAL(5,2)
-);
-
-
 INSERT INTO hm_accessories (product_id, name, stock, product_code, price) values (81, 'Belts', 19, '48951-3158', 3.19);
 INSERT INTO hm_accessories (product_id, name, stock, product_code, price) values (82, 'Scarves', 21, '0085-4331', 67.43);
 INSERT INTO hm_accessories (product_id, name, stock, product_code, price) values (83, 'Tie', 3, '52125-610', 89.69);

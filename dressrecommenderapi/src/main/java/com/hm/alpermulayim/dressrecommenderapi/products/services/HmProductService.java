@@ -22,7 +22,5 @@ public class HmProductService {
     public List<Product> getProducts()
     {
         return productRepository.findAll();
-
-
     }
 }

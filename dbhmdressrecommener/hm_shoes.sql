@@ -1,11 +1,3 @@
-CREATE TABLE hm_shoes (
-	product_id INT,
-	stock INT,
-	name VARCHAR(12),
-	size INT,
-	price DECIMAL(5,2),
-	product_code VARCHAR(50)
-);
 INSERT INTO hm_shoes (product_id, stock, name, size, price, product_code) values (51, 89, 'Casual Shoes', 41, 72.93, '60505-3670');
 INSERT INTO hm_shoes (product_id, stock, name, size, price, product_code) values (52, 26, 'Sandals', 36, 54.74, '0245-0057');
 INSERT INTO hm_shoes (product_id, stock, name, size, price, product_code) values (53, 29, 'Heels', 36, 41.43, '49852-165');
