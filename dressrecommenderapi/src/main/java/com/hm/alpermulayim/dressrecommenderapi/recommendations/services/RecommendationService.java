@@ -95,7 +95,13 @@ public class RecommendationService {
         CustomerHistoryAnalysis customerAnalysis = historyAnalyseManager.analyze(history);
 
         if (history.isEmpty()) {
-            //add exception
+             recommendedRecipes.add(generateDefaultRecipe(recipeRequest.getRecipeName(),
+                    topClothes.isEmpty() ? null : topClothes.get(0),
+                    bottomClothes.isEmpty() ? null :bottomClothes.get(0),
+                    shoes.isEmpty() ? null : shoes.get(0),
+                    accessories.isEmpty() ? null : accessories.get(0)
+            ));
+             return recommendedRecipes;
         }
 
         topClothes = applyCustomerAnalysisFilterForClothes(topClothes, customerAnalysis);
@@ -237,7 +243,7 @@ public class RecommendationService {
             recommendedRecipes.add(
                     RecommendedRecipe.builder()
                             .name(recipeName)
-                            .code("Recipe-" + recipeName + "-" + i)
+                            .code("HM-Recipe-" + recipeName + "-" + i+1)
                             .price(new BigDecimal(totalCost).setScale(2, RoundingMode.DOWN))
                             .products(recommendedProducts)
                             .build()
@@ -262,7 +268,7 @@ public class RecommendationService {
 
         return RecommendedRecipe.builder()
                 .name(recipeName)
-                .code("Recipe-" + recipeName + "-" + "GENERATED_SYTEM")
+                .code("Recipe-" + recipeName + "-" + "hm_provided")
                 .price(new BigDecimal(totalPrice).setScale(2, RoundingMode.DOWN))
                 .products(recommendedProducts)
                 .build();
