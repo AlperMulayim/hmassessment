@@ -42,3 +42,11 @@ SELECT hm_product_attributes.style, COUNT(*) FROM hm_product_attributes
 WHERE hm_product_attributes.color IN ("BLACK","red","blue") OR  hm_product_attributes.material IN ("linen")
 GROUP BY hm_product_attributes.style;
 
+
+SELECT hm_recipes.name, recipe_tags.name FROM hm_recipes
+INNER JOIN hm_recipe_tags  ON hm_recipe_tags.recipe_id = hm_recipes.id 
+INNER JOIN recipe_tags ON hm_recipe_tags.tag_id = recipe_tags.id;
+
+
+SELECT * FROM recipe_tags;
+SELECT * FROM hm_recipes;
