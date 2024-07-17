@@ -65,8 +65,6 @@ public class RecommendationService {
 
         List<Product> products = productService.getProducts().subList(37, 44);
 
-        //create recepies algorithm.
-        //TODO: update here for recepies algorithm
         List<RecommendedProduct> recommendedProducts = products.stream()
                 .map(product -> RecommendedProduct.builder()
                         .code(product.getCode())
@@ -137,37 +135,13 @@ public class RecommendationService {
 
             Integer totalRecipe = recipeRequest.getNumOfRecipe() == null ? defaultNumOfRecipe : recipeRequest.getNumOfRecipe();
 
-            for (int i = 0; i < totalRecipe; ++i) {
-                List<Product> selectedProducts = new ArrayList<>();
-                if (!accessories.isEmpty()) {
-                    HmAccessory selected = i >= accessories.size() - 1 ? accessories.get(0) : accessories.get(i);
-                    selectedProducts.add(selected);
-                }
-                if (!topClothes.isEmpty()) {
-                    HmClothes selected = i >= topClothes.size() - 1 ? topClothes.get(0) : topClothes.get(i);
-                    selectedProducts.add(selected);
-                }
-                if (!bottomClothes.isEmpty()) {
-                    HmClothes selected = i >= bottomClothes.size() - 1 ? bottomClothes.get(0) : bottomClothes.get(i);
-                    selectedProducts.add(selected);
-                }
-                if (!shoes.isEmpty()) {
-                    HmShoes selected = i >= shoes.size() - 1 ? shoes.get(0) : shoes.get(i);
-                    selectedProducts.add(selected);
-                }
-                List<RecommendedProduct> recommendedProducts = getRecommendedProducts(selectedProducts);
-
-                Double totalCost = calculateTotalCostForRecipe(selectedProducts);
-
-
-                recommendedRecipes.add(
-                        RecommendedRecipe.builder()
-                                .name(recipeRequest.getRecipeName())
-                                .price(new BigDecimal(totalCost).setScale(2, RoundingMode.DOWN))
-                                .products(recommendedProducts)
-                                .build()
-                );
-            }
+          recommendedRecipes = createRecipesFromSelectProducts(totalRecipe,
+                    recipeRequest.getRecipeName(),
+                    topClothes,
+                    bottomClothes,
+                    shoes,
+                    accessories
+                    );
         }
         return recommendedRecipes;
     }
@@ -209,8 +183,8 @@ public class RecommendationService {
                 .collect(Collectors.toList());
     }
 
-    public List<RecommendedProduct> getRecommendedProducts(List<Product> selectedProducts){
-       return selectedProducts.stream()
+    public List<RecommendedProduct> getRecommendedProducts(List<Product> selectedProducts) {
+        return selectedProducts.stream()
                 .map(product -> RecommendedProduct.builder()
                         .code(product.getCode())
                         .price(product.getPrice())
@@ -221,9 +195,52 @@ public class RecommendationService {
 
     }
 
-    public Double calculateTotalCostForRecipe(List<Product> selectedProducts){
-       return selectedProducts.stream()
+    public Double calculateTotalCostForRecipe(List<Product> selectedProducts) {
+        return selectedProducts.stream()
                 .mapToDouble(prod -> prod.getPrice().doubleValue())
                 .sum();
+    }
+
+    public List<RecommendedRecipe> createRecipesFromSelectProducts(Integer totalRecipe,
+                                                        String recipeName,
+                                                        List<HmClothes> tops,
+                                                        List<HmClothes> bottoms,
+                                                        List<HmShoes> shoes,
+                                                        List<HmAccessory> accessories) {
+
+        List<RecommendedRecipe> recommendedRecipes = new ArrayList<>();
+
+        for (int i = 0; i < totalRecipe; ++i) {
+            List<Product> selectedProducts = new ArrayList<>();
+            if (!accessories.isEmpty()) {
+                HmAccessory selected = i >= accessories.size() - 1 ? accessories.get(0) : accessories.get(i);
+                selectedProducts.add(selected);
+            }
+            if (!tops.isEmpty()) {
+                HmClothes selected = i >= tops.size() - 1 ? tops.get(0) : tops.get(i);
+                selectedProducts.add(selected);
+            }
+            if (!bottoms.isEmpty()) {
+                HmClothes selected = i >= bottoms.size() - 1 ? bottoms.get(0) : bottoms.get(i);
+                selectedProducts.add(selected);
+            }
+            if (!shoes.isEmpty()) {
+                HmShoes selected = i >= shoes.size() - 1 ? shoes.get(0) : shoes.get(i);
+                selectedProducts.add(selected);
+            }
+
+            List<RecommendedProduct> recommendedProducts = getRecommendedProducts(selectedProducts);
+            Double totalCost = calculateTotalCostForRecipe(selectedProducts);
+
+            recommendedRecipes.add(
+                    RecommendedRecipe.builder()
+                            .name(recipeName)
+                            .code("Recipe-" + recipeName + "-" + i)
+                            .price(new BigDecimal(totalCost).setScale(2, RoundingMode.DOWN))
+                            .products(recommendedProducts)
+                            .build()
+            );
+        }
+        return recommendedRecipes;
     }
 }
