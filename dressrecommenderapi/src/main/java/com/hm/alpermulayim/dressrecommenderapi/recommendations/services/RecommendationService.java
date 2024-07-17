@@ -61,9 +61,9 @@ public class RecommendationService {
         this.recipeService = recipeService;
     }
 
-    public RecommendedRecipe getRecipes(){
+    public RecommendedRecipe getRecipes() {
 
-        List<Product> products = productService.getProducts().subList(37,44);
+        List<Product> products = productService.getProducts().subList(37, 44);
 
         //create recepies algorithm.
         //TODO: update here for recepies algorithm
@@ -81,7 +81,7 @@ public class RecommendationService {
                 .sum();
 
         return RecommendedRecipe.builder()
-                .price(new BigDecimal(totalPrice).setScale(2,RoundingMode.DOWN))
+                .price(new BigDecimal(totalPrice).setScale(2, RoundingMode.DOWN))
                 .code("RCP-123")
                 .name("wedding")
                 .products(recommendedProducts)
@@ -89,94 +89,128 @@ public class RecommendationService {
     }
 
 
-    public RecommendedRecipe getRecipesForPreferences(RecipeRequest recipeRequest){
-        //TODO: Get products  < price
-        //TODO: filter top clothes with user history preferences < % price clothes preference
-        //TODO: filter bottom clothes with user history preferences < % price clothes preference
-        //TODO: filter shoes with user history preferences < % price shoes preference
-        //TODO: filter accessories with user history preferences < % price accessories preference
-        List<Product> selectedProducts = new LinkedList<>();
+    public List<RecommendedRecipe> getRecipesForPreferences(RecipeRequest recipeRequest) {
+        Integer defaultNumOfRecipe = 2;
+        List<RecommendedRecipe> recommendedRecipes = new ArrayList<>();
 
-        CustomerBudget budget = getCustomerBudget(recipeRequest.getTotalBudget(),recipeRequest.getPricePreferences());
-
-        List<HmClothes> topClothes = getUserBudgetClothesByPrice(budget.getTop(),ClotheType.top);
-        List<HmClothes> bottomClothes = getUserBudgetClothesByPrice(budget.getBottom(),ClotheType.bottom);
-        List<HmShoes>  shoes = getUserBudgetShoes(budget.getShoes());
+        CustomerBudget budget = getCustomerBudget(recipeRequest.getTotalBudget(), recipeRequest.getPricePreferences());
+        List<HmClothes> topClothes = getUserBudgetClothesByPrice(budget.getTop(), ClotheType.top);
+        List<HmClothes> bottomClothes = getUserBudgetClothesByPrice(budget.getBottom(), ClotheType.bottom);
+        List<HmShoes> shoes = getUserBudgetShoes(budget.getShoes());
         List<HmAccessory> accessories = getUserBudgetAccessories(budget.getAccessories());
 
-
-
-        System.out.println(topClothes);
-
-        List<RecommendedProduct> recipeProducts = new ArrayList<>();
-        //SELECT top
-
-        //SELECT bottom
-
-        //SELECT shoe
         List<PurchaseHistory> history = historyService.getPurchaseHistoryForCustomer(recipeRequest.getUserId());
-
         CustomerHistoryAnalysis customerAnalysis = historyAnalyseManager.analyze(history);
 
-        //SELECT accesory
+        topClothes = applyCustomerAnalysisFilterForClothes(topClothes, customerAnalysis);
+        bottomClothes = applyCustomerAnalysisFilterForClothes(bottomClothes, customerAnalysis);
+        shoes = applyCustomerAnalysisFilterForShoes(shoes, customerAnalysis);
+        accessories = applyCustomerAnalysisFilterForAccessories(accessories, customerAnalysis);
+
+        Optional<Recipe> recipe = recipeService.getRecipe(recipeRequest.getRecipeName());
+
+        if (recipe.isPresent()) {
+            List<String> recipeTags = recipe.get().getTags().stream()
+                    .map(RecipeTag::getName).toList();
+
+            topClothes = topClothes.stream()
+                    .filter(clothe -> recipeTags.contains(clothe.getAttributes().getStyle().toLowerCase()))
+                    .sorted(Comparator.comparing(HmClothes::getPrice).reversed())
+                    .collect(Collectors.toList());
+
+            bottomClothes = bottomClothes.stream()
+                    .filter(clothe -> recipeTags.contains(clothe.getAttributes().getStyle().toLowerCase()))
+                    .sorted(Comparator.comparing(HmClothes::getPrice).reversed())
+                    .collect(Collectors.toList());
 
 
-        System.out.println( attributesRepository.findByColorIn(Set.of("black","red")));
-        System.out.println(customerAnalysis);
+            shoes = shoes.stream()
+                    .filter(shoe -> recipeTags.contains(shoe.getAttributes().getStyle().toLowerCase()))
+                    .sorted(Comparator.comparing(HmShoes::getPrice).reversed())
+                    .collect(Collectors.toList());
 
-       topClothes = applyCustomerAnalysisFilterForClothes(topClothes,customerAnalysis);
-       bottomClothes = applyCustomerAnalysisFilterForClothes(bottomClothes,customerAnalysis);
-       shoes = applyCustomerAnalysisFilterForShoes(shoes,customerAnalysis);
-       accessories = applyCustomerAnalysisFilterForAccessories(accessories,customerAnalysis);
-
-       Optional<Recipe> recipe = recipeService.getRecipe(recipeRequest.getRecipeName());
-
-
-       if(recipe.isPresent()){
-          List<String> recipeTags = recipe.get().getTags().stream()
-                  .map(RecipeTag::getName).toList();
-
-          topClothes = topClothes.stream()
-                  .filter(clothe-> recipeTags.contains(clothe.getAttributes().getStyle().toLowerCase()))
-                  .sorted(Comparator.comparing(HmClothes::getPrice).reversed())
-                  .collect(Collectors.toList());
-
-           bottomClothes = bottomClothes.stream()
-                   .filter(clothe-> recipeTags.contains(clothe.getAttributes().getStyle().toLowerCase()))
-                   .sorted(Comparator.comparing(HmClothes::getPrice).reversed())
-                   .collect(Collectors.toList());
+            accessories = accessories.stream()
+                    .filter(accs -> recipeTags.contains(accs.getAttributes().getStyle().toLowerCase()))
+                    .sorted(Comparator.comparing(HmAccessory::getPrice).reversed())
+                    .collect(Collectors.toList());
 
 
-           shoes = shoes.stream()
-                   .filter(shoe-> recipeTags.contains(shoe.getAttributes().getStyle().toLowerCase()))
-                   .sorted(Comparator.comparing(HmShoes::getPrice).reversed())
-                   .collect(Collectors.toList());
+            Integer totalRecipe = recipeRequest.getNumOfRecipe() == null ? defaultNumOfRecipe : recipeRequest.getNumOfRecipe();
 
-           accessories = accessories.stream()
-                   .filter(accs-> recipeTags.contains(accs.getAttributes().getStyle().toLowerCase()))
-                   .sorted(Comparator.comparing(HmAccessory::getPrice).reversed())
-                   .collect(Collectors.toList());
+            for (int i = 0; i < totalRecipe; ++i) {
+                List<Product> selectedProducts = new ArrayList<>();
+                if (!accessories.isEmpty()) {
+                    HmAccessory selected = i >= accessories.size() - 1 ? accessories.get(0) : accessories.get(i);
+                    selectedProducts.add(selected);
+                }
+                if (!topClothes.isEmpty()) {
+                    HmClothes selected = i >= topClothes.size() - 1 ? topClothes.get(0) : topClothes.get(i);
+                    selectedProducts.add(selected);
+                }
+                if (!bottomClothes.isEmpty()) {
+                    HmClothes selected = i >= bottomClothes.size() - 1 ? bottomClothes.get(0) : bottomClothes.get(i);
+                    selectedProducts.add(selected);
+                }
+                if (!shoes.isEmpty()) {
+                    HmShoes selected = i >= shoes.size() - 1 ? shoes.get(0) : shoes.get(i);
+                    selectedProducts.add(selected);
+                }
+                List<RecommendedProduct> recommendedProducts = getRecommendedProducts(selectedProducts);
 
-
-           if(!accessories.isEmpty()){
-               selectedProducts.add(accessories.get(0));
-           }
-           if(!topClothes.isEmpty()){
-               selectedProducts.add(topClothes.get(0));
-           }
-           if(!bottomClothes.isEmpty()) {
-               selectedProducts.add(bottomClothes.get(0));
-           }
-           if(!shoes.isEmpty()){
-               selectedProducts.add(shoes.get(0));
-           }
-
-       }
-
-       //create recommendation boxes; check request wedding swimming like and add filter.
+                Double totalCost = calculateTotalCostForRecipe(selectedProducts);
 
 
-        List<RecommendedProduct> recommendedProducts = selectedProducts.stream()
+                recommendedRecipes.add(
+                        RecommendedRecipe.builder()
+                                .name(recipeRequest.getRecipeName())
+                                .price(new BigDecimal(totalCost).setScale(2, RoundingMode.DOWN))
+                                .products(recommendedProducts)
+                                .build()
+                );
+            }
+        }
+        return recommendedRecipes;
+    }
+
+    public List<HmClothes> getUserBudgetClothesByPrice(Double price, ClotheType type) {
+        return clothesRepository.findByPriceLessThanAndType(price, type.name());
+    }
+
+    public List<HmShoes> getUserBudgetShoes(Double price) {
+        return shoesRepository.findByPriceLessThan(price);
+    }
+
+    public List<HmAccessory> getUserBudgetAccessories(Double price) {
+        return accessoriesRepository.findByPriceLessThan(price);
+    }
+
+    public CustomerBudget getCustomerBudget(Double totalBudget, RecipePricePreferences preferences) {
+        return new CustomerBudgetCalculator().getPrices(totalBudget, preferences);
+    }
+
+    public List<HmClothes> applyCustomerAnalysisFilterForClothes(List<HmClothes> clothes, CustomerHistoryAnalysis analysis) {
+        return clothes.stream()
+                .filter(clothe -> analysis.getColors().contains(clothe.getAttributes().getColor().toLowerCase()) ||
+                        analysis.getMaterials().contains(clothe.getAttributes().getMaterial().toLowerCase()))
+                .collect(Collectors.toList());
+    }
+
+    public List<HmShoes> applyCustomerAnalysisFilterForShoes(List<HmShoes> shoes, CustomerHistoryAnalysis analysis) {
+        return shoes.stream()
+                .filter(top -> analysis.getColors().contains(top.getAttributes().getColor().toLowerCase()) ||
+                        analysis.getMaterials().contains(top.getAttributes().getMaterial().toLowerCase()))
+                .collect(Collectors.toList());
+    }
+
+    public List<HmAccessory> applyCustomerAnalysisFilterForAccessories(List<HmAccessory> shoes, CustomerHistoryAnalysis analysis) {
+        return shoes.stream()
+                .filter(top -> analysis.getColors().contains(top.getAttributes().getColor().toLowerCase()) ||
+                        analysis.getMaterials().contains(top.getAttributes().getMaterial().toLowerCase()))
+                .collect(Collectors.toList());
+    }
+
+    public List<RecommendedProduct> getRecommendedProducts(List<Product> selectedProducts){
+       return selectedProducts.stream()
                 .map(product -> RecommendedProduct.builder()
                         .code(product.getCode())
                         .price(product.getPrice())
@@ -185,55 +219,11 @@ public class RecommendationService {
                         .build())
                 .collect(Collectors.toList());
 
-        //ONLY BASED ON BROWNS;
+    }
 
-
-        Double totalCost = selectedProducts.stream()
-                .mapToDouble(prod-> prod.getPrice().doubleValue())
+    public Double calculateTotalCostForRecipe(List<Product> selectedProducts){
+       return selectedProducts.stream()
+                .mapToDouble(prod -> prod.getPrice().doubleValue())
                 .sum();
-
-        //TODO: add recommended basket for this step.
-
-        return RecommendedRecipe.builder()
-                .name(recipeRequest.getRecipeName())
-                .price(new BigDecimal(totalCost).setScale(2,RoundingMode.DOWN))
-                .products(recommendedProducts)
-                .build();
-    }
-
-    public List<HmClothes> getUserBudgetClothesByPrice(Double price,ClotheType type){
-        return clothesRepository.findByPriceLessThanAndType(price,type.name());
-    }
-
-    public List<HmShoes> getUserBudgetShoes(Double price){
-        return shoesRepository.findByPriceLessThan(price);
-    }
-
-    public List<HmAccessory> getUserBudgetAccessories(Double price){
-        return accessoriesRepository.findByPriceLessThan(price);
-    }
-    public CustomerBudget getCustomerBudget(Double totalBudget, RecipePricePreferences preferences){
-        return new CustomerBudgetCalculator().getPrices(totalBudget,preferences);
-    }
-
-    public List<HmClothes> applyCustomerAnalysisFilterForClothes(List<HmClothes> clothes, CustomerHistoryAnalysis analysis){
-       return clothes.stream()
-                .filter(clothe-> analysis.getColors().contains(clothe.getAttributes().getColor().toLowerCase()) ||
-                        analysis.getMaterials().contains(clothe.getAttributes().getMaterial().toLowerCase()))
-                .collect(Collectors.toList());
-    }
-
-    public List<HmShoes> applyCustomerAnalysisFilterForShoes(List<HmShoes> shoes, CustomerHistoryAnalysis analysis){
-        return shoes.stream()
-                .filter(top-> analysis.getColors().contains(top.getAttributes().getColor().toLowerCase()) ||
-                        analysis.getMaterials().contains(top.getAttributes().getMaterial().toLowerCase()))
-                .collect(Collectors.toList());
-    }
-
-    public List<HmAccessory> applyCustomerAnalysisFilterForAccessories(List<HmAccessory> shoes, CustomerHistoryAnalysis analysis){
-        return shoes.stream()
-                .filter(top-> analysis.getColors().contains(top.getAttributes().getColor().toLowerCase()) ||
-                        analysis.getMaterials().contains(top.getAttributes().getMaterial().toLowerCase()))
-                .collect(Collectors.toList());
     }
 }

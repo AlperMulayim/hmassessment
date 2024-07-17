@@ -13,5 +13,6 @@ public class RecipeRequest {
     private Integer userId;
     private String recipeName;
     private Double totalBudget;
+    private Integer numOfRecipe;
     private RecipePricePreferences pricePreferences;
 }

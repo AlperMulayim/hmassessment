@@ -6,6 +6,8 @@ import com.hm.alpermulayim.dressrecommenderapi.recommendations.services.Recommen
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/v1/recommendations/recipes")
 public class RecommendationController {
@@ -23,7 +25,7 @@ public class RecommendationController {
     }
 
     @PostMapping
-    public RecommendedRecipe createRecepieWithMyPreferences(@RequestBody RecipeRequest recipeRequest){
+    public List<RecommendedRecipe> createRecepieWithMyPreferences(@RequestBody RecipeRequest recipeRequest){
         System.out.println(recipeRequest);
         return service.getRecipesForPreferences(recipeRequest);
     }
