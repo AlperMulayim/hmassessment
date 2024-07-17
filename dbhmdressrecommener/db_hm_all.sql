@@ -88,7 +88,7 @@ CREATE TABLE IF NOT EXISTS hm_recipes(
 CREATE TABLE IF NOT EXISTS recipe_tags(
     id INT NOT NULL,
     name VARCHAR(200),
-    CONSTRAINT pk_recipes PRIMARY KEY(id)
+    CONSTRAINT pk_recipe_tags PRIMARY KEY(id)
 );
 
 
