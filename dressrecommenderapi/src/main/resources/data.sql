@@ -1,8 +1,3 @@
-
-
-
-
-
 INSERT INTO hm_customers (id, first_name, last_name, code) values (1, 'Shamus', 'Batecok', '13733-030');
 INSERT INTO hm_customers (id, first_name, last_name, code) values (2, 'Patricia', 'Thorington', '47202-1143');
 INSERT INTO hm_customers (id, first_name, last_name, code) values (3, 'Shellysheldon', 'Tyrrell', '15127-900');
@@ -18,9 +13,6 @@ INSERT INTO hm_customers (id, first_name, last_name, code) values (12, 'Evvie', 
 INSERT INTO hm_customers (id, first_name, last_name, code) values (13, 'Michale', 'Pardue', '0054-0196');
 INSERT INTO hm_customers (id, first_name, last_name, code) values (14, 'Gnni', 'Pendlebery', '54569-3456');
 INSERT INTO hm_customers (id, first_name, last_name, code) values (15, 'Orsa', 'Scragg', '54569-2784');
-
-
-
 
 INSERT INTO hm_clothes (product_id, name, stock, prod_size, price, product_code, clothe_type) VALUES
 (1, 'Jeans', 50, 'M', 39.99, 'HM001', 'bottom'),
