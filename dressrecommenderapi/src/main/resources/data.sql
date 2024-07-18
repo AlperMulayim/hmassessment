@@ -1,102 +1,7 @@
-USE db_hm_dress_recommender;
-
-CREATE TABLE IF NOT EXISTS hm_customers(
-	id INT AUTO_INCREMENT,
-	first_name VARCHAR(50),
-	last_name VARCHAR(50),
-	code VARCHAR(50),
-	CONSTRAINT PRIMARY KEY(id)
-);
 
 
-CREATE TABLE IF NOT EXISTS hm_accessories (
-	product_id INT,
-	name VARCHAR(100),
-	stock INT,
-	product_code VARCHAR(50),
-	price DECIMAL(5,2),
-    CONSTRAINT PRIMARY KEY(product_id)
-);
-
-CREATE TABLE IF NOT EXISTS hm_product_attributes (
-	id INTEGER NOT NULL,
-    product_id INTEGER,
-    color VARCHAR(40),
-    material VARCHAR(80),
-    style VARCHAR(90),
-    season VARCHAR(80),
-    CONSTRAINT PRIMARY KEY(id)
-);
-
-CREATE TABLE IF NOT EXISTS hm_clothes (
-	product_id INT,
-	name VARCHAR(100),
-	stock INT,
-	size VARCHAR(3),
-	price DECIMAL(5,2),
-	product_code VARCHAR(50),
-	clothe_type VARCHAR(10),
-    CONSTRAINT PRIMARY KEY(product_id)
-);
-
-CREATE TABLE IF NOT EXISTS hm_shoes (
-	product_id INT,
-	stock INT,
-	name VARCHAR(120),
-	size INT,
-	price DECIMAL(5,2),
-	product_code VARCHAR(50),
-    CONSTRAINT PRIMARY KEY(product_id)
-);
 
 
-CREATE TABLE IF NOT EXISTS hm_purchase_history(
-    id INT NOT NULL,
-    voucher_code VARCHAR(100),
-    customer_id  INT NOT NULL,
-    price DECIMAL(6,2),
-    CONSTRAINT pk_purchase_history PRIMARY KEY(id),
-    CONSTRAINT fk_user FOREIGN KEY(customer_id) REFERENCES hm_customers(id)
-);
-
-
-CREATE TABLE  IF NOT EXISTS hm_purchased_products_details(
-    id INT NOT NULL,
-    product_name VARCHAR(100),
-    history_id INT,
-    color VARCHAR(100),
-    material VARCHAR(200),
-    style VARCHAR(200),
-    season VARCHAR(200),
-    CONSTRAINT fk_history FOREIGN KEY(history_id) REFERENCES hm_purchase_history(id),
-    CONSTRAINT pk_purchased_product_details PRIMARY KEY(id)
-);
-
-
-CREATE TABLE IF NOT EXISTS product_seq (next_val bigint) engine=InnoDB;
-
-CREATE TABLE IF NOT EXISTS hm_recipes(
-    id INT NOT NULL,
-    name VARCHAR(200),
-    CONSTRAINT pk_hm_recipes PRIMARY KEY(id)
-);
-
-CREATE TABLE IF NOT EXISTS recipe_tags(
-    id INT NOT NULL,
-    name VARCHAR(200),
-    CONSTRAINT pk_recipe_tags PRIMARY KEY(id)
-);
-
-
-CREATE TABLE IF NOT EXISTS hm_recipe_tags(
-    id INT NOT NULL,
-    recipe_id INT NOT NULL,
-    tag_id INT NOT NULL,
-    CONSTRAINT hm_recipe_tags PRIMARY KEY(id),
-    CONSTRAINT fk_recipe FOREIGN KEY(recipe_id) REFERENCES hm_recipes(id),
-    CONSTRAINT fk_tag FOREIGN KEY(tag_id) REFERENCES recipe_tags(id)
-);
-INSERT INTO product_seq values ( 90 );
 
 INSERT INTO hm_customers (id, first_name, last_name, code) values (1, 'Shamus', 'Batecok', '13733-030');
 INSERT INTO hm_customers (id, first_name, last_name, code) values (2, 'Patricia', 'Thorington', '47202-1143');
@@ -117,7 +22,7 @@ INSERT INTO hm_customers (id, first_name, last_name, code) values (15, 'Orsa', '
 
 
 
-INSERT INTO hm_clothes (product_id, name, stock, size, price, product_code, clothe_type) VALUES
+INSERT INTO hm_clothes (product_id, name, stock, prod_size, price, product_code, clothe_type) VALUES
 (1, 'Jeans', 50, 'M', 39.99, 'HM001', 'bottom'),
 (2, 'Chinos', 30, 'L', 49.99, 'HM002', 'bottom'),
 (3, 'Shorts', 40, 'S', 29.99, 'HM003', 'bottom'),
@@ -210,122 +115,122 @@ INSERT INTO hm_accessories (product_id, name, stock, product_code, price) values
 INSERT INTO hm_accessories (product_id, name, stock, product_code, price) values (88, 'Belts', 12, '0009-0395', 26.01);
 INSERT INTO hm_accessories (product_id, name, stock, product_code, price) values (89, 'Scarves', 88, '25021-813', 20.8);
 INSERT INTO hm_accessories (product_id, name, stock, product_code, price) values (90, 'Tie', 52, '36987-1429', 7.19);
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 1, 1, "red","jean","summer","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 2, 2, "brown","linen","summer","formal");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 3, 3, "brown","cotton","summer","sport");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 4, 4, "pink","cotton","summer","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 5, 5, "gray","linen","spring","sport");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 6, 6, "blue","denim","winter","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 7, 7, "black","cotton","spring","sport");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 8, 8, "white","polyester","summer","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 9, 9, "blue","denim","winter","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 10, 10, "black","denim","summer","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 11, 11, "blue","cotton","summer","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 12, 12, "brown","silk","summer","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 13, 13, "white","cotton","summer","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 14, 14, "black","polyester","summer","sport");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 15, 15, "black","wool","winter","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 16, 16, "brown","polyester","winter","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 17, 17, "brown","blue","summer","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 18, 18, "black","cotton","summer","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 19, 19, "pink","wool","winter","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 20, 20, "black","silk","spring","formal");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 21, 21, "brown","polyester","winter","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 22, 22, "white","polyester","winter","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 23, 23, "gray","cotton","winter","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 24, 24, "blue","cotton","winter","formal");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 25, 25, "white","cotton","summer","formal");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 26, 26, "brown","denim","winter","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 27, 27, "brown","polyester","spring","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 28, 28, "black","cotton","winter","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 29, 29, "gray","polyester","winter","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 30, 30, "blue","wool","winter","formal");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 31, 31, "black","cotton","winter","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 32, 32, "brown","cotton","summer","sport");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 33, 33, "white","cotton","spring","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 34, 34, "blue","cotton","summer","sport");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 35, 35, "yellow","cotton","summer","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 36, 36, "brown","cotton","summer","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 37, 37, "gray","cotton","spring","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 38, 38, "black","cotton","winter","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 39, 39, "brown","cotton","summer","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 40, 40, "pink","cotton","summer","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 41, 41, "gray","cotton","summer","sport");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 42, 42, "black","cotton","summer","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 43, 43, "white","wool","winter","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 44, 44, "pink","cotton","winter","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 45, 45, "brown","cotton","summer","sport");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 46, 46, "black","cotton","winter","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 47, 47, "pink","cotton","spring","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 48, 48, "yellow","cotton","summer","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 49, 49, "gray","cotton","spring","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 50, 50, "blue","cotton","summer","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 51, 51, "navy blue","canvas","spring","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 52, 52, "gray","leather","summer","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 53, 53, "red","Synthetic Leather","spring","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 54, 54, "black","canvas","spring","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 55, 55, "blue","Synthetic Leather","summer","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 56, 56, "brown","suede","winter","formal");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 57, 57, "black","leather","spring","formal");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 58, 58, "yellow","Synthetic Leather","summer","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 59, 59, "green","suede","winter","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 60, 60, "brown","leather","summer","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 61, 61, "black","canvas","spring","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 62, 62, "gray","leather","summer","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 63, 63, "blue","suede","winter","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 64, 64, "green","Synthetic Leather","summer","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 65, 65, "navy blue","canvas","spring","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 66, 66, "black","suede","winter","formal");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 67, 67, "yellow","Leather","spring","formal");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 68, 68, "brown","Synthetic Leather","summer","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 69, 69, "blue","suede","winter","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 70, 70, "white","canvas","winter","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 71, 71, "black","canvas","spring","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 72, 72, "black","Synthetic Leather","summer","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 73, 73, "yellow","canvas","summer","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 74, 74, "navy blue","suede","spring","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 75, 75, "black","canvas","spring","sport");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 76, 76, "white","leather","winter","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 77, 77, "green","canvas","spring","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 78, 78, "gray","mesh","spring","sport");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 79, 79, "brown","leather","summer","sport");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 80, 80, "black","leather","summer","sport");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 81, 81, "brown","leather","winter","formal");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 82, 82, "red","wool","winter","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 83, 83, "black","fabric","winter","formal");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 84, 84, "gray","leather","spring","formal");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 85, 85, "white","wool","winter","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 86, 86, "brown","leather","winter","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 87, 87, "black","Synthetic Leather","winter","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 88, 88, "brown","leather","summer","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 89, 89, "white","wool","winter","casual");
-INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 90, 90, "red","fabric","winter","formal");
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 1, 1, 'brown','jean','summer','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 2, 2, 'brown','linen','summer','formal');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 3, 3, 'brown','cotton','summer','sport');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 4, 4, 'pink','cotton','summer','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 5, 5, 'gray','linen','spring','sport');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 6, 6, 'blue','denim','winter','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 7, 7, 'black','cotton','spring','sport');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 8, 8, 'white','polyester','summer','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 9, 9, 'blue','denim','winter','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 10, 10, 'black','denim','summer','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 11, 11, 'blue','cotton','summer','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 12, 12, 'brown','silk','summer','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 13, 13, 'white','cotton','summer','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 14, 14, 'black','polyester','summer','sport');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 15, 15, 'black','wool','winter','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 16, 16, 'brown','polyester','winter','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 17, 17, 'brown','blue','summer','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 18, 18, 'black','cotton','summer','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 19, 19, 'pink','wool','winter','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 20, 20, 'black','silk','spring','formal');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 21, 21, 'brown','polyester','winter','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 22, 22, 'white','polyester','winter','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 23, 23, 'gray','cotton','winter','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 24, 24, 'blue','cotton','winter','formal');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 25, 25, 'white','cotton','summer','formal');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 26, 26, 'brown','denim','winter','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 27, 27, 'brown','polyester','spring','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 28, 28, 'black','cotton','winter','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 29, 29, 'gray','polyester','winter','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 30, 30, 'blue','wool','winter','formal');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 31, 31, 'black','cotton','winter','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 32, 32, 'brown','cotton','summer','sport');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 33, 33, 'white','cotton','spring','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 34, 34, 'blue','cotton','summer','sport');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 35, 35, 'yellow','cotton','summer','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 36, 36, 'brown','cotton','summer','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 37, 37, 'gray','cotton','spring','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 38, 38, 'black','cotton','winter','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 39, 39, 'brown','cotton','summer','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 40, 40, 'pink','cotton','summer','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 41, 41, 'gray','cotton','summer','sport');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 42, 42, 'black','cotton','summer','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 43, 43, 'white','wool','winter','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 44, 44, 'pink','cotton','winter','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 45, 45, 'brown','cotton','summer','sport');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 46, 46, 'black','cotton','winter','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 47, 47, 'pink','cotton','spring','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 48, 48, 'yellow','cotton','summer','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 49, 49, 'gray','cotton','spring','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 50, 50, 'blue','cotton','summer','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 51, 51, 'navy blue','canvas','spring','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 52, 52, 'gray','leather','summer','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 53, 53, 'red','Synthetic Leather','spring','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 54, 54, 'black','canvas','spring','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 55, 55, 'blue','Synthetic Leather','summer','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 56, 56, 'brown','suede','winter','formal');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 57, 57, 'black','leather','spring','formal');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 58, 58, 'yellow','Synthetic Leather','summer','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 59, 59, 'green','suede','winter','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 60, 60, 'brown','leather','summer','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 61, 61, 'black','canvas','spring','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 62, 62, 'gray','leather','summer','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 63, 63, 'blue','suede','winter','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 64, 64, 'green','Synthetic Leather','summer','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 65, 65, 'navy blue','canvas','spring','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 66, 66, 'black','suede','winter','formal');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 67, 67, 'yellow','Leather','spring','formal');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 68, 68, 'brown','Synthetic Leather','summer','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 69, 69, 'blue','suede','winter','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 70, 70, 'white','canvas','winter','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 71, 71, 'black','canvas','spring','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 72, 72, 'black','Synthetic Leather','summer','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 73, 73, 'yellow','canvas','summer','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 74, 74, 'navy blue','suede','spring','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 75, 75, 'black','canvas','spring','sport');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 76, 76, 'white','leather','winter','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 77, 77, 'green','canvas','spring','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 78, 78, 'gray','mesh','spring','sport');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 79, 79, 'brown','leather','summer','sport');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 80, 80, 'black','leather','summer','sport');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 81, 81, 'brown','leather','winter','formal');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 82, 82, 'red','wool','winter','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 83, 83, 'black','fabric','winter','formal');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 84, 84, 'gray','leather','spring','formal');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 85, 85, 'white','wool','winter','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 86, 86, 'brown','leather','winter','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 87, 87, 'black','Synthetic Leather','winter','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 88, 88, 'brown','leather','summer','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 89, 89, 'white','wool','winter','casual');
+INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 90, 90, 'red','fabric','winter','formal');
 
-INSERT INTO  hm_purchase_history (id, voucher_code, customer_id,price ) VALUES (1, "PRCH-1234",1, 1200);
+INSERT INTO  hm_purchase_history (id, voucher_code, customer_id,price ) VALUES (1, 'PRCH-1234',1, 1200);
 
-INSERT INTO  hm_purchased_products_details (id, history_id,product_name, color, material, style, season) VALUES (1,1,"tsort","BLACK","linen", "sport","winter");
-INSERT INTO  hm_purchased_products_details (id,history_id, product_name, color, material, style, season) VALUES (2,1,"tsort","Blue","linen", "sport","winter");
+INSERT INTO  hm_purchased_products_details (id, history_id,product_name, color, material, style, season) VALUES (1,1,'tsort','BLACK','linen', 'sport','winter');
+INSERT INTO  hm_purchased_products_details (id,history_id, product_name, color, material, style, season) VALUES (2,1,'tsort','Blue','linen', 'sport','winter');
 
-INSERT INTO  hm_purchased_products_details (id, history_id,product_name, color, material, style, season) VALUES (3,1,"tsort","Red","linen", "sport","spring");
-INSERT INTO  hm_purchased_products_details (id,history_id, product_name, color, material, style, season) VALUES (4,1,"tsort","BLACK","linen", "formal","summer");
-INSERT INTO  hm_purchased_products_details (id, history_id,product_name, color, material, style, season) VALUES (5,1,"tsort","BLACK","linen", "sport","summer");
+INSERT INTO  hm_purchased_products_details (id, history_id,product_name, color, material, style, season) VALUES (3,1,'tsort','Red','linen', 'sport','spring');
+INSERT INTO  hm_purchased_products_details (id,history_id, product_name, color, material, style, season) VALUES (4,1,'tsort','BLACK','linen', 'formal','summer');
+INSERT INTO  hm_purchased_products_details (id, history_id,product_name, color, material, style, season) VALUES (5,1,'tsort','BLACK','linen', 'sport','summer');
 
-INSERT INTO recipe_tags(id,name) VALUES(1,"casual");
-INSERT INTO recipe_tags(id,name) VALUES(2,"formal");
-INSERT INTO recipe_tags(id,name) VALUES(3,"sport");
+INSERT INTO recipe_tags(id,name) VALUES(1,'casual');
+INSERT INTO recipe_tags(id,name) VALUES(2,'formal');
+INSERT INTO recipe_tags(id,name) VALUES(3,'sport');
 
-INSERT INTO hm_recipes(id,name) VALUES(1,"wedding");
-INSERT INTO hm_recipes(id,name) VALUES(2,"sport");
-INSERT INTO hm_recipes(id,name) VALUES(3,"travel");
-INSERT INTO hm_recipes(id,name) VALUES(4,"party");
-INSERT INTO hm_recipes(id,name) VALUES(5,"work");
+INSERT INTO hm_recipes(id,name) VALUES(1,'wedding');
+INSERT INTO hm_recipes(id,name) VALUES(2,'sport');
+INSERT INTO hm_recipes(id,name) VALUES(3,'travel');
+INSERT INTO hm_recipes(id,name) VALUES(4,'party');
+INSERT INTO hm_recipes(id,name) VALUES(5,'work');
 
-INSERT INTO hm_recipe_tags(id,recipe_id,tag_id) VALUES(1,1,1);
-INSERT INTO hm_recipe_tags(id,recipe_id,tag_id) VALUES(2,1,2);
-INSERT INTO hm_recipe_tags(id,recipe_id,tag_id) VALUES(3,2,3);
-INSERT INTO hm_recipe_tags(id,recipe_id,tag_id) VALUES(4,3,3);
-INSERT INTO hm_recipe_tags(id,recipe_id,tag_id) VALUES(5,3,1);
-INSERT INTO hm_recipe_tags(id,recipe_id,tag_id) VALUES(6,4,1);
-INSERT INTO hm_recipe_tags(id,recipe_id,tag_id) VALUES(7,4,2);
-INSERT INTO hm_recipe_tags(id,recipe_id,tag_id) VALUES(8,5,1);
-INSERT INTO hm_recipe_tags(id,recipe_id,tag_id) VALUES(9,5,2);
+INSERT INTO hm_recipe_tags(recipe_id,tag_id) VALUES(1,1);
+INSERT INTO hm_recipe_tags(recipe_id,tag_id) VALUES(1,2);
+INSERT INTO hm_recipe_tags(recipe_id,tag_id) VALUES(2,3);
+INSERT INTO hm_recipe_tags(recipe_id,tag_id) VALUES(3,3);
+INSERT INTO hm_recipe_tags(recipe_id,tag_id) VALUES(3,1);
+INSERT INTO hm_recipe_tags(recipe_id,tag_id) VALUES(4,1);
+INSERT INTO hm_recipe_tags(recipe_id,tag_id) VALUES(4,2);
+INSERT INTO hm_recipe_tags(recipe_id,tag_id) VALUES(5,1);
+INSERT INTO hm_recipe_tags(recipe_id,tag_id) VALUES(5,2);

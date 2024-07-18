@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class HmClothes extends Product {
-    @Column(name = "size")
+    @Column(name = "prod_size")
     private String size;
 
     @Column(name = "clothe_type")

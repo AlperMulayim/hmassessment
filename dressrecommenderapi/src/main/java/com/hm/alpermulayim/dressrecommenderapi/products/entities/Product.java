@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public abstract class Product {
+public class Product {
     @Id
     @GeneratedValue(strategy =  GenerationType.AUTO)
     @Column(name = "product_id")
@@ -33,5 +33,4 @@ public abstract class Product {
     @OneToOne
     @JoinColumn(name = "product_id")
     private ProductAttributes attributes;
-
 }

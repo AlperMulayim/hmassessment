@@ -16,8 +16,12 @@ public class ProductAttributes {
 
     @Column(name = "product_id")
     private Integer productId;
+    @Column(name = "color")
     private String  color;
+    @Column(name = "material")
     private String  material;
+    @Column(name = "style")
     private String  style;
+    @Column(name = "season")
     private String  season;
 }
