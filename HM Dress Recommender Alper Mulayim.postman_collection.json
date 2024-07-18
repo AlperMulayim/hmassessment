@@ -1,0 +1,160 @@
+{
+	"info": {
+		"_postman_id": "d76c671b-1e53-44d1-8dcc-35679801cd4d",
+		"name": "HM Dress Recommender Alper Mulayim",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32844729"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8080/api/v1/customers",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IklGYVFYaVNlTTZicjNqa3djSXV3aiJ9.eyJpc3MiOiJodHRwczovL2Rldi1kZ2llbWM1eXYxaWw3cHJlLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiI2UWN6RVNMd3VlMXZLV2pXelF4VXlHTk1RVnpPTmFOOUBjbGllbnRzIiwiYXVkIjoiYXBpLyIsImlhdCI6MTcxNzc5NDQ5MywiZXhwIjoxNzE3ODgwODkzLCJndHkiOiJjbGllbnQtY3JlZGVudGlhbHMiLCJhenAiOiI2UWN6RVNMd3VlMXZLV2pXelF4VXlHTk1RVnpPTmFOOSJ9.nUYK_KfFNrHwafz1C_IA5B4ZHoN_L-aj5sSlzCHKtv8f8dmdYUvJw18Qtn1V3Rb3XjX2LeJ_yJLHAOKg9YRG3RUjMQIdcHSvYSELIl4YJtxoL5Pub1SErGkBWH-w2Gss8getxx0YCl-28o80rBkav4sTro-8bHYDnK2Zs4hB6KTT9U649IdPWyugl2frbQY4P2015KvUK_N-0D-vGw06zBeIYTxuVWZGbPmfkFKfipaAXZ3gcsU1XFDKdo0eKVTxhaLnN-GTtVWL66ddtJi7yZYdbM5Uh8a11SPu2o5b_iGrEGYyAKz-ADj4lZTpNNiEeAzlRbNYrC1MMCqWuRr0Hg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"coca cola 1 lt\",\n    \"code\":\"coco-1234-1L\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/customers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"customers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/api/v1/products",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/api/v1/purchases",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/api/v1/recommendations/recipes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/recommendations/recipes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"recommendations",
+						"recipes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/api/v1/recommendations/recipes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"totalBudget\":500,\n    \"recipeName\": \"wedding\",\n    \"numOfRecipe\":3,\n    \"userId\":1,\n    \"pricePreferences\":{\n        \"top\": 50,\n        \"bottom\": 30,\n        \"accessories\": 10,\n        \"shoes\": 20 \n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/recommendations/recipes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"recommendations",
+						"recipes"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
