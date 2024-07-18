@@ -198,14 +198,28 @@ INSERT INTO  hm_product_attributes (id, product_id, color, material, season, sty
 INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 89, 89, 'white','wool','winter','casual');
 INSERT INTO  hm_product_attributes (id, product_id, color, material, season, style) VALUES( 90, 90, 'red','fabric','winter','formal');
 
-INSERT INTO  hm_purchase_history (id, voucher_code, customer_id,price ) VALUES (1, 'PRCH-1234',1, 1200);
+INSERT INTO  hm_purchase_history (id, voucher_code, customer_id,price ) VALUES (1, 'PRCH-1230',1, 1200);
+INSERT INTO  hm_purchase_history (id, voucher_code, customer_id,price ) VALUES (2, 'PRCH-1231',10, 2000);
+INSERT INTO  hm_purchase_history (id, voucher_code, customer_id,price ) VALUES (3, 'PRCH-1232',3, 750);
+INSERT INTO  hm_purchase_history (id, voucher_code, customer_id,price ) VALUES (4, 'PRCH-1233',2, 950);
 
 INSERT INTO  hm_purchased_products_details (id, history_id,product_name, color, material, style, season) VALUES (1,1,'tsort','BLACK','linen', 'sport','winter');
-INSERT INTO  hm_purchased_products_details (id,history_id, product_name, color, material, style, season) VALUES (2,1,'tsort','Blue','linen', 'sport','winter');
-
-INSERT INTO  hm_purchased_products_details (id, history_id,product_name, color, material, style, season) VALUES (3,1,'tsort','Red','linen', 'sport','spring');
+INSERT INTO  hm_purchased_products_details (id,history_id, product_name, color, material, style, season) VALUES (2,1,'tsort','Blue','cotton', 'sport','winter');
+INSERT INTO  hm_purchased_products_details (id, history_id,product_name, color, material, style, season) VALUES (3,1,'Denim Shorts','Red','canvas', 'casual','spring');
 INSERT INTO  hm_purchased_products_details (id,history_id, product_name, color, material, style, season) VALUES (4,1,'tsort','BLACK','linen', 'formal','summer');
-INSERT INTO  hm_purchased_products_details (id, history_id,product_name, color, material, style, season) VALUES (5,1,'tsort','BLACK','linen', 'sport','summer');
+INSERT INTO  hm_purchased_products_details (id, history_id,product_name, color, material, style, season) VALUES (5,1,'Blouse','BLACK','linen', 'sport','summer');
+INSERT INTO  hm_purchased_products_details (id, history_id,product_name, color, material, style, season) VALUES (6,2,'Blouse','blue','cotton', 'formal','winter');
+INSERT INTO  hm_purchased_products_details (id,history_id, product_name, color, material, style, season) VALUES (7,2,'tsort','brown','linen', 'casual','spring');
+INSERT INTO  hm_purchased_products_details (id, history_id,product_name, color, material, style, season) VALUES (8,2,'tsort','Red','linen', 'sport','spring');
+INSERT INTO  hm_purchased_products_details (id,history_id, product_name, color, material, style, season) VALUES (9,2,'chino','black','linen', 'formal','summer');
+INSERT INTO  hm_purchased_products_details (id, history_id,product_name, color, material, style, season) VALUES (10,2,'tsort','brown','cotton', 'sport','summer');
+INSERT INTO  hm_purchased_products_details (id,history_id, product_name, color, material, style, season) VALUES (11,3,'blouse','BLACK','linen', 'casual','summer');
+INSERT INTO  hm_purchased_products_details (id, history_id,product_name, color, material, style, season) VALUES (12,3,'tsort','white','cotton', 'sport','spring');
+INSERT INTO  hm_purchased_products_details (id,history_id, product_name, color, material, style, season) VALUES (13,3,'blouse','BLACK','linen', 'casual','spring');
+INSERT INTO  hm_purchased_products_details (id, history_id,product_name, color, material, style, season) VALUES (14,3,'tsort','white','linen', 'sport','summer');
+INSERT INTO  hm_purchased_products_details (id,history_id, product_name, color, material, style, season) VALUES (15,3,'blouse','blue','linen', 'casual','winter');
+INSERT INTO  hm_purchased_products_details (id, history_id,product_name, color, material, style, season) VALUES (16,3,'tsort','white','cotton', 'sport','summer');
+
 
 INSERT INTO recipe_tags(id,name) VALUES(1,'casual');
 INSERT INTO recipe_tags(id,name) VALUES(2,'formal');
